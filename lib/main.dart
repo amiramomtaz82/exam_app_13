@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'config/di/di.dart';
+import 'core/app_theme/app_theme.dart';
+import 'features/auth/presentation/forgetpassword/forget_password/view/forget_password_screen.dart';
+import 'features/auth/presentation/forgetpassword/forget_password/view_model/forget_password_cubit.dart';
 
 void main() {
 
@@ -16,6 +20,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
+        theme: AppTheme.lightTheme,
+        home: BlocProvider(
+          create: (_) => getIt<ForgetPasswordCubit>(),
+          child: const ForgetPasswordScreen(),
+
+        )
       );
   }
 }
