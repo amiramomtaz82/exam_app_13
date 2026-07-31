@@ -20,25 +20,26 @@ class _ApiAuth implements ApiAuth {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<InvalidType> signup(InvalidType body) async {
+  Future<AuthResponseDto> signup(SignupRequestDto body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = body;
-    final _options = _setStreamType<InvalidType>(
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _options = _setStreamType<AuthResponseDto>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            null,
+            'api/v1/auth/signup',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late InvalidType _value;
+    late AuthResponseDto _value;
     try {
-      _value = InvalidType.fromJson(_result.data!);
+      _value = AuthResponseDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -47,25 +48,26 @@ class _ApiAuth implements ApiAuth {
   }
 
   @override
-  Future<InvalidType> signin(InvalidType body) async {
+  Future<AuthResponseDto> signin(SigninRequestDto body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = body;
-    final _options = _setStreamType<InvalidType>(
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _options = _setStreamType<AuthResponseDto>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            null,
+            'api/v1/auth/signin',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late InvalidType _value;
+    late AuthResponseDto _value;
     try {
-      _value = InvalidType.fromJson(_result.data!);
+      _value = AuthResponseDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;

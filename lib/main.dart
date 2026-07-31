@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'config/di/di.dart';
+import 'config/di.dart';
 import 'core/app_theme/app_theme.dart';
+
 
 void main() {
 

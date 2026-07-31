@@ -28,7 +28,8 @@ abstract class AppStrings {
   static const String confirmPassword = "Confirm Password";
   static const String passwordMust = "Password must not be empty and must contain 6 characters with upper case letter and one number at least ";
 
-//---------------------------------------------------------------
-
-
+  static const String somethingWentWrong = "Something went wrong";
+  static const String invalidCode = "Invalid code";
+  static const String anotherCodeHasBeenSent = "Another code has been sent";
+  static const String thePasswordChanged = "The password has been changed successfully";
 }
