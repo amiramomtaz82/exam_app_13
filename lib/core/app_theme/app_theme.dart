@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'app_colors.dart';
 
 class AppTheme {
@@ -8,12 +7,10 @@ class AppTheme {
   static final ThemeData lightTheme = _buildTheme(
       LightColors(), Brightness.light);
 
-
   static ThemeData _buildTheme(AppColors colors, Brightness brightness) {
     return ThemeData(
       useMaterial3: true,
       scaffoldBackgroundColor: colors.background,
-
       colorScheme: ColorScheme(
         brightness: brightness,
         primary: colors.primary,
@@ -25,7 +22,6 @@ class AppTheme {
         surface: colors.surface,
         onSurface: colors.textPrimary,
       ),
-
       appBarTheme: AppBarTheme(
         backgroundColor: colors.background,
         foregroundColor: colors.textPrimary,
@@ -38,8 +34,6 @@ class AppTheme {
           fontWeight: FontWeight.w600,
         ),
       ),
-
-      /// ----------------------- Text theme----------------------///
       textTheme: TextTheme(
         titleLarge: TextStyle(
           fontSize: 20,
@@ -59,8 +53,6 @@ class AppTheme {
           color: colors.hint,
         ),
       ),
-
-      ///--------------- text Field -------------------///
       inputDecorationTheme: InputDecorationTheme(
         floatingLabelBehavior: FloatingLabelBehavior.always,
         contentPadding: const EdgeInsets.symmetric(
@@ -112,10 +104,8 @@ class AppTheme {
           ),
         ),
       ),
-      //------------------Snack Bar-------------------
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: colors.darkGrey
-        ,
+        backgroundColor: colors.darkGrey,
         contentTextStyle: TextStyle(
           color: colors.white,
           fontSize: 16,
@@ -128,11 +118,6 @@ class AppTheme {
         ),
         actionTextColor: colors.primary,
       ),
-
-
-
-      ///---------------- Elevated button ------------------------////
-
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: colors.primary,
@@ -147,8 +132,6 @@ class AppTheme {
           ),
         ),
       ),
-
-
     );
   }
 }

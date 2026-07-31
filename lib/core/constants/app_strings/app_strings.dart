@@ -26,11 +26,8 @@ abstract class AppStrings {
   static const String continu = "Continue";
   static const String rest = "Reset Password";
   static const String confirmPassword = "Confirm Password";
-  static const String somethingWentWrong="Something went wrong,please try again";
-  static const String anotherCodeHasBeenSent="Another code has been sent to your email";
   static const String passwordMust = "Password must not be empty and must contain 6 characters with upper case letter and one number at least ";
-  static const String invalidCode="invalid code";
-  static const String thePasswordChanged="the password changed successfully";
+
 //---------------------------------------------------------------
 
 
