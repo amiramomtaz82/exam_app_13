@@ -32,11 +32,11 @@ class Validation {
       return 'Password must be at least 6 characters long';
     }
     if (!value.contains(RegExp(r'[A-Z]'))) {
-      return 'Password must contain at least one uppercase letter';
+       return 'Password must contain at least one uppercase letter';
     }
     if (!value.contains(RegExp(r'[0-9]'))) {
       return 'Password must contain at least one number';
-    }
+     }
     return null;
   }
 
