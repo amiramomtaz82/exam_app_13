@@ -1,9 +1,9 @@
-import 'package:exam_app/core/base/base_state.dart';
-import 'package:exam_app/core/base/result.dart';
-import 'package:exam_app/feature/auth/login&&regestier/domain/usecases/signin_use_case.dart';
-import 'package:exam_app/feature/auth/login&&regestier/domain/usecases/signup_use_case.dart';
-import 'package:exam_app/feature/auth/login&&regestier/presentaion/view_model/auth_intent.dart';
-import 'package:exam_app/feature/auth/login&&regestier/presentaion/view_model/auth_state.dart';
+import 'package:exam_app_13/core/base/base_state.dart';
+import 'package:exam_app_13/core/base/result.dart';
+import 'package:exam_app_13/features/auth/domain/usecases/signin_use_case.dart';
+import 'package:exam_app_13/features/auth/domain/usecases/signup_use_case.dart';
+import 'package:exam_app_13/features/auth/presentaion/sign_Up_in/view_model/auth_intent.dart';
+import 'package:exam_app_13/features/auth/presentaion/sign_Up_in/view_model/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
