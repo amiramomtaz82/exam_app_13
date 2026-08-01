@@ -6,7 +6,7 @@ import '../../model/responses/forget_password_response.dart';
 import '../../model/responses/reset_code_response.dart';
 import '../../model/responses/reset_password_response.dart';
 
-abstract class AuthRemoteDataSource {
+abstract interface class AuthRemoteDataSource {
 
   Future<BaseResponse<ForgetPasswordResponse>>
   forgetPassword(ForgetPasswordRequest request);

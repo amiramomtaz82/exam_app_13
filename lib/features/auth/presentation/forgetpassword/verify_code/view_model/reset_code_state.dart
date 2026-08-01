@@ -1,8 +1,10 @@
+import 'package:equatable/equatable.dart';
+
 import '../../../../../../config/base_state/resource.dart';
 import '../../../../domain/entity/forget_password_entity.dart';
 
 
-class ResetCodeState {
+class ResetCodeState extends Equatable {
   final Resource<ForgetPasswordEntity> resetCodeResource;
 
   const ResetCodeState({
@@ -23,4 +25,8 @@ class ResetCodeState {
       resetCodeResource ?? this.resetCodeResource,
     );
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [resetCodeResource];
 }

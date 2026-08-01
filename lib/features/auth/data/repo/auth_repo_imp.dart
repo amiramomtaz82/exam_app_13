@@ -11,69 +11,60 @@ import '../model/responses/forget_password_response.dart';
 import '../model/responses/reset_code_response.dart';
 import '../model/responses/reset_password_response.dart';
 
-@LazySingleton(as: AuthRepo)
+@Injectable(as: AuthRepo)
 class AuthRepoImp implements AuthRepo {
-
-
   final AuthRemoteDataSource authRemoteDataSource;
+
   AuthRepoImp(this.authRemoteDataSource);
 
   @override
-  Future<BaseResponse<ForgetPasswordEntity>> forgetPassword(String email)async {
-
+  Future<BaseResponse<ForgetPasswordEntity>> forgetPassword(
+    String email,
+  ) async {
     final request = ForgetPasswordRequest(email: email);
-    final BaseResponse<ForgetPasswordResponse> response=
-    await authRemoteDataSource.forgetPassword(request);
+    final BaseResponse<ForgetPasswordResponse> response =
+        await authRemoteDataSource.forgetPassword(request);
 
-    switch(response) {
+    switch (response) {
       case SuccessResponse<ForgetPasswordResponse>():
         return SuccessResponse(response.data.toEntity());
       case ErrorResponse<ForgetPasswordResponse>():
         return ErrorResponse(errMessage: response.errMessage);
     }
-
   }
 
   @override
-  Future<BaseResponse<ForgetPasswordEntity>> resetCode(String code) async{
-    final request=ResetCodeRequest(resetCode: code);
-    BaseResponse<ResetCodeResponse> response=await authRemoteDataSource.restCode(request);
-    switch(response){
-
-
-
+  Future<BaseResponse<ForgetPasswordEntity>> resetCode(String code) async {
+    final request = ResetCodeRequest(resetCode: code);
+    BaseResponse<ResetCodeResponse> response = await authRemoteDataSource
+        .restCode(request);
+    switch (response) {
       case SuccessResponse<ResetCodeResponse>():
         return SuccessResponse(response.data.toEntity());
 
       case ErrorResponse<ResetCodeResponse>():
         return ErrorResponse(errMessage: response.errMessage);
     }
-
-
   }
 
   @override
-  Future<BaseResponse<ForgetPasswordEntity>> resetPassword(String email, String newPassword)async {
+  Future<BaseResponse<ForgetPasswordEntity>> resetPassword(
+    String email,
+    String newPassword,
+  ) async {
+    final request = ResetPasswordRequest(
+      email: email,
+      newPassword: newPassword,
+    );
 
+    BaseResponse<ResetPasswordResponse> response = await authRemoteDataSource
+        .restPassword(request);
 
-    final request=
-    ResetPasswordRequest(email: email,newPassword:newPassword );
-
-    BaseResponse<ResetPasswordResponse> response=await authRemoteDataSource.restPassword(request);
-
-    switch(response){
-
-
-
+    switch (response) {
       case SuccessResponse<ResetPasswordResponse>():
         return SuccessResponse(response.data.toEntity());
       case ErrorResponse<ResetPasswordResponse>():
         return ErrorResponse(errMessage: response.errMessage);
     }
-
-
   }
-
-
-
 }

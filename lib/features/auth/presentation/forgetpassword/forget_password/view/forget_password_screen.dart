@@ -25,16 +25,16 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
   TextEditingController emailController = TextEditingController();
 
-  void validateEmailField(String value) {
-    setState(() {
-      if (value
-          .trim()
-          .isEmpty) {
-        hasError = false;
-      } else {
-        hasError = Validation.validateEmail(value) != null;
-      }
-    });
+ String? validateEmailField(String? value) {
+
+
+        final error = Validation.validateEmail(value??'') ;
+        setState(() {
+          hasError = error != null;
+        });
+
+        return error;
+
   }
 
 
@@ -113,7 +113,15 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       labelText: AppStrings.email,
       hintText: AppStrings.enterYourEmail,
       controller: emailController,
-      onChanged: validateEmailField,
+onChanged: (value) {
+      setState(() {
+        if (value.trim().isEmpty) {
+          hasError = false;
+        } else {
+          hasError = Validation.validateEmail(value) != null;
+        }
+      });
+    },
       validator: Validation.validateEmail,
       hasError: hasError,
     );
@@ -137,12 +145,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       //--------------------------------------------------------------
       builder: (context, state) {
         return ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: hasError
-                ? colors.darkGrey
-                : colors.primary,
-          ),
-          onPressed: state.forgetPasswordResource.isLoading
+
+          onPressed: hasError
               ? null
               : () => submitButton(context),
           child: state.forgetPasswordResource.isLoading

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:exam_app_13/core/constants/app_strings/endpoints.dart';
 
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/dio.dart';
@@ -29,22 +30,22 @@ abstract class AuthApiClient {
   factory AuthApiClient(Dio dio) = _AuthApiClient;
 
 
-  @POST("api/v1/auth/signin")
+  @POST(Endpoints.loginEndPoint)
   Future<HttpResponse<AuthResponse>> login(@Body() LoginRequest loginRequest);
 
 
 
 
-  @POST("api/v1/auth/forgotPassword")
+  @POST(Endpoints.forgetPasswordEndPoint)
   Future<HttpResponse<ForgetPasswordResponse>> forgetPassword(
       @Body()ForgetPasswordRequest forgetPasswordRequest);
 
 
-  @POST("api/v1/auth/verifyResetCode")
+  @POST(Endpoints.resetCodeEndPoint)
   Future<HttpResponse<ResetCodeResponse>> RestCode(
       @Body() ResetCodeRequest restCodRequest);
 
-  @PUT("api/v1/auth/resetPassword")
+  @PUT(Endpoints.resetPasswordEndPoint)
   Future<HttpResponse<ResetPasswordResponse>> resetPassword(
       @Body() ResetPasswordRequest restPasswordRequest);
 }

@@ -27,30 +27,30 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   bool hasError1 = false;
   bool hasError2 = false;
 
-  void validatePasswordField(String value) {
-    setState(() {
-      if (value.trim().isEmpty) {
-        hasError1 = false;
-      } else {
-        hasError1 = Validation.validatePassword(value) != null;
-      }
-    });
-  }
+  // void validatePasswordField(String value) {
+  //   setState(() {
+  //     if (value.trim().isEmpty) {
+  //       hasError1 = false;
+  //     } else {
+  //       hasError1 = Validation.validatePassword(value) != null;
+  //     }
+  //   });
+  // }
 
-  void validateConfirmPasswordField(String value) {
-    setState(() {
-      if (value.trim().isEmpty && value.trim() != passwordController.text) {
-        hasError2 = false;
-      } else {
-        hasError2 =
-            Validation.validateConfirmPassword(
-              value,
-              passwordController.text,
-            ) !=
-                null;
-      }
-    });
-  }
+  // void validateConfirmPasswordField(String value) {
+  //   setState(() {
+  //     if (value.trim().isEmpty && value.trim() != passwordController.text) {
+  //       hasError2 = false;
+  //     } else {
+  //       hasError2 =
+  //           Validation.validateConfirmPassword(
+  //             value,
+  //             passwordController.text,
+  //           ) !=
+  //               null;
+  //     }
+  //   });
+  // }
 
 
 
@@ -87,13 +87,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       ,
                       builder: (context, state) {
                         return ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: hasError2
-                                ? colors.darkGrey
-                                : colors.primary,
-                          ),
 
-                          onPressed: _continueSubmit
+
+                          onPressed:hasError2?null:
+                          _continueSubmit
                           ,child: state.resetPasswordResource.isLoading
                             ? const AppCircularIndicator()
                             : Text(AppStrings.continu),
@@ -112,13 +109,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   void _continueSubmit(){
 
-    setState(() {});
-    final isValid = formKey.currentState!.validate();
 
-    setState(() {
-      hasError2 = !isValid;
-    });
-    if (!isValid) return;
     context.read<ResetPasswordCubit>().doEvent(
       ResetPasswordEvent(
         widget.email,
@@ -155,7 +146,21 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       labelText: AppStrings.confirmPassword,
       hintText: AppStrings.confirmPassword,
       controller: confirmPasswordController,
-      onChanged: validateConfirmPasswordField,
+      onChanged:  (value) {
+        setState(() {
+          if (value.trim().isEmpty) {
+            hasError2 = false;
+          } else {
+            hasError2 =
+                      Validation.validateConfirmPassword(
+                        value,
+                        passwordController.text,
+                      ) !=
+                          null;
+                }
+
+        });
+      },
       validator: (value) {
         return Validation.validateConfirmPassword(
           value,
@@ -171,7 +176,15 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       labelText: AppStrings.password,
       hintText: AppStrings.enterYourPassword,
       controller: passwordController,
-      onChanged: validatePasswordField,
+      onChanged:  (value) {
+        setState(() {
+          if (value.trim().isEmpty) {
+            hasError1 = false;
+          } else {
+            hasError1 = Validation.validatePassword(value) != null;
+          }
+        });
+      },
       validator: Validation.validatePassword,
       hasError: hasError1,
     );

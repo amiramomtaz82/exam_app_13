@@ -4,7 +4,7 @@ import '../../../../config/base_response/base_response.dart';
 
 import '../repo/auth_repo.dart';
 import '../entity/forget_password_entity.dart';
-@lazySingleton
+@injectable
 class ForgetPasswordUsecase {
   AuthRepo authRepo;
   ForgetPasswordUsecase(this.authRepo);
