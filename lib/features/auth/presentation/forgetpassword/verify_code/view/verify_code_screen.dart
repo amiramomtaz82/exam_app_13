@@ -24,7 +24,7 @@ class EmailVerificationScreen extends StatefulWidget {
 
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   final TextEditingController codeController = TextEditingController();
-  bool isWrongCode = false;
+
   bool isLoading = false;
 
   AppColors colors = LightColors();
@@ -79,9 +79,44 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
           children: [
             buildHeader(),
             //============================================
-            buildPinput(context, defaultPinTheme, errorPinTheme),
+          BlocBuilder<ResetCodeCubit,ResetCodeState>(
+              buildWhen: (previous, current) =>
+              previous.isWrongCode != current.isWrongCode,
+              builder: (context,state) {
 
-            if (isWrongCode) buildInvalidCode(),
+                return Pinput(
+                  controller: codeController,
+                  length: 4,
+                  keyboardType: TextInputType.number,
+                  onChanged: (_) {
+                    context.read<ResetCodeCubit>().doEvents(
+                      ClearWrongCodeEvent(),
+                    );
+                  },
+
+                  onCompleted: (pin) async {
+                    await context.read<ResetCodeCubit>().doEvents(
+                      ResetCodeEvent(pin),
+                    );
+                  },
+                  defaultPinTheme: defaultPinTheme,
+                  errorPinTheme: errorPinTheme,
+                  forceErrorState:  state.isWrongCode,
+                );
+              }
+          ),
+
+            BlocBuilder<ResetCodeCubit, ResetCodeState>(
+              buildWhen: (previous, current) =>
+              previous.isWrongCode != current.isWrongCode,
+              builder: (context, state) {
+                if (!state.isWrongCode) {
+                  return const SizedBox.shrink();
+                }
+
+                return buildInvalidCode();
+              },
+            ),
 
 
             SizedBox(height: 20), buildResendCode(),
@@ -151,30 +186,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     );
   }
 
-  Pinput buildPinput(BuildContext context, PinTheme defaultPinTheme,
-      PinTheme errorPinTheme) {
-    return Pinput(
-      controller: codeController,
-      length: 4,
-      keyboardType: TextInputType.number,
-      onChanged: (_) {
-        setState(() {
-          if (isWrongCode) {
-            isWrongCode = false;
-          }
-        });
-      },
 
-      onCompleted: (pin) async {
-        await context.read<ResetCodeCubit>().doEvents(
-          ResetCodeEvent(pin),
-        );
-      },
-      defaultPinTheme: defaultPinTheme,
-      errorPinTheme: errorPinTheme,
-      forceErrorState: isWrongCode,
-    );
-  }
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
@@ -202,9 +214,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
             content: Text(
                 "${state.forgetPasswordResource.errorMessage}")),
       );
-      setState(() {
-        isWrongCode = true;
-      });
+
     }
   }
 
@@ -222,9 +232,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
         ),
       );
 
-      setState(() {
-        isWrongCode = true;
-      });
+
     }
   }
 

@@ -6,3 +6,8 @@ class ResetCodeEvent extends ResetCodeEvents {
   ResetCodeEvent(this.code);
 }
 
+
+
+class ClearWrongCodeEvent extends ResetCodeEvents {}
+class ShowWrongCodeEvent extends ResetCodeEvents {}
+

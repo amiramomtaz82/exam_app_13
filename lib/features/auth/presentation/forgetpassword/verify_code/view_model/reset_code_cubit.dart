@@ -20,6 +20,15 @@ class ResetCodeCubit extends Cubit<ResetCodeState> {
     switch (event) {
       case ResetCodeEvent(code: final code):
         _verifyResetCode(code);
+
+      case ClearWrongCodeEvent():
+        emit(state.copyWith(isWrongCode: false));
+
+      case ShowWrongCodeEvent(): emit(
+        state.copyWith(
+          isWrongCode: true,
+        ),
+      );
     }
   }
 
@@ -44,8 +53,18 @@ class ResetCodeCubit extends Cubit<ResetCodeState> {
         emit(
           state.copyWith(
             resetCodeResource: Resource.error(result.errMessage),
+            isWrongCode: true,
           ),
         );
+    }
+  }
+  void showWrongCode() {
+    emit(state.copyWith(isWrongCode: true));
+  }
+
+  void clearWrongCode() {
+    if (state.isWrongCode) {
+      emit(state.copyWith(isWrongCode: false));
     }
   }
 }

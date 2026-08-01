@@ -25,18 +25,18 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
   TextEditingController emailController = TextEditingController();
 
- String? validateEmailField(String? value) {
-
-
-        final error = Validation.validateEmail(value??'') ;
-        setState(() {
-          hasError = error != null;
-        });
-
-        return error;
-
-  }
-
+ // String? validateEmailField(String? value) {
+ //
+ //
+ //        final error = Validation.validateEmail(value??'') ;
+ //        setState(() {
+ //          hasError = error != null;
+ //        });
+ //
+ //        return error;
+ //
+ //  }
+ //
 
   @override
   void dispose() {
