@@ -1,6 +1,8 @@
+import 'package:exam_app_13/features/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'config/di/di.dart';
+import 'core/app_theme/app_theme.dart';
 
 void main() {
 
@@ -16,6 +18,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: AppTheme.lightTheme,
+      home: HomeScreen(),
       );
   }
 }
