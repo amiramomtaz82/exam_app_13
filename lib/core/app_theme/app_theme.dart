@@ -147,6 +147,43 @@ class AppTheme {
           ),
         ),
       ),
+      //-------------------Navigation Bar---------------------
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: colors.lightBlue,
+        elevation: 0,
+        height: 70,
+        indicatorColor: colors.blueSelected,
+
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return IconThemeData(
+              color: colors.primary,
+              size: 24,
+            );
+          }
+
+          return IconThemeData(
+            color: colors.darkGrey,
+            size: 24,
+          );
+        }),
+
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color:colors.primary,
+            );
+          }
+
+          return TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: colors.darkGrey,
+          );
+        }),
+      ),
 
 
     );
