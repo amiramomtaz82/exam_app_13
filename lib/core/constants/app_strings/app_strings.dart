@@ -32,6 +32,7 @@ abstract class AppStrings {
   static const String invalidCode="invalid code";
   static const String thePasswordChanged="the password changed successfully";
 //---------------------------------------------------------------
-
-
+static const String survey="Survey";
+  static const String search="Search";
+  static const String browseBySubject="Browse by subjects";
 }
