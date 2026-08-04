@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:exam_app/core/api/api_constants.dart';
-import 'package:exam_app/feature/auth/login&&regestier/data/models/auth_response_dto.dart';
-import 'package:exam_app/feature/auth/login&&regestier/data/models/signin_request_dto.dart';
-import 'package:exam_app/feature/auth/login&&regestier/data/models/signup_request_dto.dart';
+import 'package:exam_app_13/core/api/api_constants.dart';
+import 'package:exam_app_13/features/auth/data/models/auth_response_dto.dart';
+import 'package:exam_app_13/features/auth/data/models/signin_request_dto.dart';
+import 'package:exam_app_13/features/auth/data/models/signup_request_dto.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 

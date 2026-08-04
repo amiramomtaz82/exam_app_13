@@ -1,7 +1,8 @@
-import 'package:exam_app_13/features/auth/presentation/forgetpassword/verify_code/view_model/reset_code_event.dart';
-import 'package:exam_app_13/features/auth/presentation/forgetpassword/verify_code/view_model/reset_code_state.dart';
+import 'package:exam_app_13/features/auth/presentaion/forgetpassword/verify_code/view_model/reset_code_event.dart';
+import 'package:exam_app_13/features/auth/presentaion/forgetpassword/verify_code/view_model/reset_code_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
 
 import '../../../../../../config/base_response/base_response.dart';
 import '../../../../../../config/base_state/resource.dart';
