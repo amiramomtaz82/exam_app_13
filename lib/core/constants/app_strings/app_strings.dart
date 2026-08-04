@@ -36,4 +36,7 @@ static const String survey="Survey";
   static const String search="Search";
   static const String browseBySubject="Browse by subjects";
   static const String dummyExamID="69d980117c82914570305dd5";
+
+  static const String exam="Exam";
+  static const String question  ="Question";
 }

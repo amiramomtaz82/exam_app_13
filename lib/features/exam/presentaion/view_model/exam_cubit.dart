@@ -44,6 +44,7 @@ Future<void> doEvents(ExamEvents event) async {
 
 Future<void> _loadQuestions(String examId) async {
 
+
   emit(
     state.copyWith(
       questionsResource: Resource.loading(),
@@ -154,4 +155,10 @@ void _selectAnswer(String answerKey) {
   bool get isLastQuestion =>
     currentIndex ==
           totalQuestions- 1;
+
+  double get progressValue {
+    if (totalQuestions == 0) return 0;
+
+    return (currentIndex + 1) / totalQuestions;
+  }
 }
