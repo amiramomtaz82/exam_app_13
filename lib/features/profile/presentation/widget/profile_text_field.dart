@@ -8,12 +8,15 @@ class ProfileTextField extends StatelessWidget {
   final String? labelText;
   final String? hintText;
   final bool obscureText;
+  final bool readOnly;
+  final bool enabled;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   final String? errorText;
   final ValueChanged<String>? onChanged;
+  final EdgeInsetsGeometry? padding;
 
   const ProfileTextField({
     super.key,
@@ -21,42 +24,58 @@ class ProfileTextField extends StatelessWidget {
     this.labelText,
     this.hintText,
     this.obscureText = false,
+    this.readOnly = false,
+    this.enabled = true,
     this.prefixIcon,
     this.suffixIcon,
     this.keyboardType,
     this.inputFormatters,
     this.errorText,
     this.onChanged,
+    this.padding,
   });
 
   @override
   Widget build(BuildContext context) {
     final AppColors colors = LightColors();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AppTextFormField(
-          controller: controller,
-          labelText: labelText,
-          hintText: hintText,
-          obscureText: obscureText,
-          prefixIcon: prefixIcon,
-          suffixIcon: suffixIcon,
-          keyboardType: keyboardType,
-          inputFormatters: inputFormatters,
-          onChanged: onChanged,
-          hasError: errorText != null,
-          color: colors,
-        ),
-        if (errorText != null)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              errorText!,
-              style: TextStyle(color: colors.error, fontSize: 12),
-            ),
+    final bool hasErr = errorText != null && errorText!.isNotEmpty;
+
+    return Padding(
+      padding: padding ?? const EdgeInsets.symmetric(vertical: 6),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AppTextFormField(
+            controller: controller,
+            labelText: labelText,
+            hintText: hintText,
+            obscureText: obscureText,
+            readOnly: readOnly,
+            enabled: enabled,
+            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
+            keyboardType: keyboardType,
+            inputFormatters: inputFormatters,
+            onChanged: onChanged,
+            hasError: hasErr,
+            color: colors,
+            padding: EdgeInsets.zero,
           ),
-      ],
+          if (hasErr)
+            Padding(
+              padding: const EdgeInsets.only(top: 4, left: 4),
+              child: Text(
+                errorText!,
+                style: TextStyle(
+                  color: colors.error,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

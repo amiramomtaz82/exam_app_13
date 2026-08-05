@@ -19,28 +19,41 @@ class ProfileButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppColors colors = LightColors();
-    return ElevatedButton(
-      onPressed: (isLoading || onPressed == null) ? null : onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: colors.primary,
-        disabledBackgroundColor: colors.blueSelected,
-        foregroundColor: colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-      ),
-      child: isLoading
-          ? const AppCircularIndicator()
-          : Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (icon != null) ...[
-                  icon!,
-                  const SizedBox(width: 8),
+    final bool enabled = onPressed != null && !isLoading;
+
+    return SizedBox(
+      width: double.infinity,
+      height: 50,
+      child: ElevatedButton(
+        onPressed: enabled ? onPressed : null,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: colors.primary,
+          disabledBackgroundColor: colors.darkGrey,
+          foregroundColor: colors.white,
+          disabledForegroundColor: colors.white,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          textStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        child: isLoading
+            ? const AppCircularIndicator()
+            : Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (icon != null) ...[
+                    icon!,
+                    const SizedBox(width: 8),
+                  ],
+                  Text(label),
                 ],
-                Text(label),
-              ],
-            ),
+              ),
+      ),
     );
   }
 }

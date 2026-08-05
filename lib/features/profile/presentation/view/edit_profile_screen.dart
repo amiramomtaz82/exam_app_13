@@ -3,6 +3,7 @@ import 'package:exam_app_13/core/app_theme/app_colors.dart';
 import 'package:exam_app_13/features/profile/presentation/viewModel/profile_cubit.dart';
 import 'package:exam_app_13/features/profile/presentation/viewModel/profile_intent.dart';
 import 'package:exam_app_13/features/profile/presentation/viewModel/profile_state.dart';
+import 'package:exam_app_13/features/profile/presentation/widget/profile_avatar.dart';
 import 'package:exam_app_13/features/profile/presentation/widget/profile_button.dart';
 import 'package:exam_app_13/features/profile/presentation/widget/profile_text_field.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +55,7 @@ class _EditProfileFormState extends State<_EditProfileForm> {
   late final TextEditingController _lastNameController;
   late final TextEditingController _emailController;
   late final TextEditingController _phoneController;
+  late final TextEditingController _passwordController;
 
   @override
   void initState() {
@@ -71,6 +73,7 @@ class _EditProfileFormState extends State<_EditProfileForm> {
     _lastNameController = TextEditingController(text: initial.lastName);
     _emailController = TextEditingController(text: initial.email);
     _phoneController = TextEditingController(text: initial.phone);
+    _passwordController = TextEditingController(text: '******');
   }
 
   @override
@@ -80,18 +83,40 @@ class _EditProfileFormState extends State<_EditProfileForm> {
     _lastNameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
+    _passwordController.dispose();
     super.dispose();
+  }
+
+  bool _isModified(ProfileState state) {
+    final init = widget.initial;
+    return state.username != init.username ||
+        state.firstName != init.firstName ||
+        state.lastName != init.lastName ||
+        state.email != init.email ||
+        state.phone != init.phone;
   }
 
   @override
   Widget build(BuildContext context) {
     final AppColors colors = LightColors();
+
     return Scaffold(
+      backgroundColor: colors.background,
       appBar: AppBar(
-        backgroundColor: colors.primary,
-        foregroundColor: colors.white,
-        title: const Text('Edit Profile'),
-        centerTitle: true,
+        backgroundColor: colors.background,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new, color: colors.black, size: 18),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(
+          'Edit profile',
+          style: TextStyle(
+            color: colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: BlocConsumer<ProfileCubit, ProfileState>(
         listener: (context, state) {
@@ -107,68 +132,99 @@ class _EditProfileFormState extends State<_EditProfileForm> {
           }
         },
         builder: (context, state) {
+          final cubit = context.read<ProfileCubit>();
+          final modified = _isModified(state);
+          final valid = state.isProfileFormValid;
+          final loading = state.status == ProfileStatus.loading;
+
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             child: Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 480),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    const SizedBox(height: 8),
+                    ProfileAvatar(
+                      radius: 44,
+                      firstName: widget.initial.firstName,
+                      lastName: widget.initial.lastName,
+                    ),
+                    const SizedBox(height: 20),
                     ProfileTextField(
                       controller: _usernameController,
-                      labelText: 'Username',
-                      errorText: _visibleError(state.username, state.usernameError),
-                      onChanged: (value) => context
-                          .read<ProfileCubit>()
-                          .onIntent(UpdateFieldIntent(ProfileField.username, value)),
+                      labelText: 'User name',
+                      errorText: state.username.isNotEmpty ? state.usernameError : null,
+                      onChanged: (val) =>
+                          cubit.onIntent(UpdateFieldIntent(ProfileField.username, val)),
                     ),
-                    ProfileTextField(
-                      controller: _firstNameController,
-                      labelText: 'First Name',
-                      errorText: _visibleError(state.firstName, state.firstNameError),
-                      onChanged: (value) => context
-                          .read<ProfileCubit>()
-                          .onIntent(UpdateFieldIntent(ProfileField.firstName, value)),
-                    ),
-                    ProfileTextField(
-                      controller: _lastNameController,
-                      labelText: 'Last Name',
-                      errorText: _visibleError(state.lastName, state.lastNameError),
-                      onChanged: (value) => context
-                          .read<ProfileCubit>()
-                          .onIntent(UpdateFieldIntent(ProfileField.lastName, value)),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ProfileTextField(
+                            controller: _firstNameController,
+                            labelText: 'First name',
+                            errorText: state.firstName.isNotEmpty ? state.firstNameError : null,
+                            onChanged: (val) =>
+                                cubit.onIntent(UpdateFieldIntent(ProfileField.firstName, val)),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: ProfileTextField(
+                            controller: _lastNameController,
+                            labelText: 'Last name',
+                            errorText: state.lastName.isNotEmpty ? state.lastNameError : null,
+                            onChanged: (val) =>
+                                cubit.onIntent(UpdateFieldIntent(ProfileField.lastName, val)),
+                          ),
+                        ),
+                      ],
                     ),
                     ProfileTextField(
                       controller: _emailController,
                       labelText: 'Email',
                       keyboardType: TextInputType.emailAddress,
-                      errorText: _visibleError(state.email, state.emailError),
-                      onChanged: (value) => context
-                          .read<ProfileCubit>()
-                          .onIntent(UpdateFieldIntent(ProfileField.email, value)),
+                      errorText: state.email.isNotEmpty ? state.emailError : null,
+                      onChanged: (val) =>
+                          cubit.onIntent(UpdateFieldIntent(ProfileField.email, val)),
+                    ),
+                    ProfileTextField(
+                      controller: _passwordController,
+                      labelText: 'Password',
+                      obscureText: true,
+                      readOnly: true,
+                      suffixIcon: TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Change',
+                          style: TextStyle(
+                            color: colors.primary,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
                     ),
                     ProfileTextField(
                       controller: _phoneController,
-                      labelText: 'Phone',
+                      labelText: 'Phone number',
                       keyboardType: TextInputType.phone,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
                         LengthLimitingTextInputFormatter(11),
                       ],
-                      errorText: _visibleError(state.phone, state.phoneError),
-                      onChanged: (value) => context
-                          .read<ProfileCubit>()
-                          .onIntent(UpdateFieldIntent(ProfileField.phone, value)),
+                      errorText: state.phone.isNotEmpty ? state.phoneError : null,
+                      onChanged: (val) =>
+                          cubit.onIntent(UpdateFieldIntent(ProfileField.phone, val)),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 28),
                     ProfileButton(
-                      label: 'Save Changes',
-                      isLoading: state.status == ProfileStatus.loading,
-                      onPressed: state.isProfileFormValid && state.status != ProfileStatus.loading
-                          ? () => context
-                              .read<ProfileCubit>()
-                              .onIntent(const SaveProfileIntent())
+                      label: 'Update',
+                      isLoading: loading,
+                      onPressed: modified && valid && !loading
+                          ? () => cubit.onIntent(const SaveProfileIntent())
                           : null,
                     ),
                   ],
@@ -180,7 +236,4 @@ class _EditProfileFormState extends State<_EditProfileForm> {
       ),
     );
   }
-
-  String? _visibleError(String value, String? error) =>
-      value.isNotEmpty ? error : null;
 }

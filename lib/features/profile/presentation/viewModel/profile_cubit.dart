@@ -47,7 +47,7 @@ class ProfileCubit extends Cubit<ProfileState> {
           lastName: data.lastName,
           email: data.email,
           phone: data.phone,
-          usernameError: Validation.validateName(data.username),
+          usernameError: Validation.validateUsername(data.username),
           firstNameError: Validation.validateName(data.firstName),
           lastNameError: Validation.validateName(data.lastName),
           emailError: Validation.validateEmail(data.email),
@@ -61,7 +61,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   void _updateField(ProfileField field, String value) {
     switch (field) {
       case ProfileField.username:
-        emit(state.copyWith(username: value, usernameError: Validation.validateName(value)));
+        emit(state.copyWith(username: value, usernameError: Validation.validateUsername(value)));
       case ProfileField.firstName:
         emit(state.copyWith(firstName: value, firstNameError: Validation.validateName(value)));
       case ProfileField.lastName:
@@ -71,7 +71,12 @@ class ProfileCubit extends Cubit<ProfileState> {
       case ProfileField.phone:
         emit(state.copyWith(phone: value, phoneError: Validation.validatePhoneNumber(value)));
       case ProfileField.oldPassword:
-        emit(state.copyWith(oldPassword: value, oldPasswordError: Validation.validatePassword(value)));
+        emit(state.copyWith(
+          oldPassword: value,
+          oldPasswordError: value.trim().isEmpty
+              ? 'Current password is required'
+              : null,
+        ));
       case ProfileField.newPassword:
         emit(state.copyWith(newPassword: value, newPasswordError: Validation.validatePassword(value)));
       case ProfileField.rePassword:

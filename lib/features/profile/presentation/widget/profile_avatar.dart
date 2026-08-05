@@ -6,13 +6,15 @@ class ProfileAvatar extends StatelessWidget {
   final String? firstName;
   final String? lastName;
   final String? imageUrl;
+  final VoidCallback? onCameraTap;
 
   const ProfileAvatar({
     super.key,
-    this.radius = 48,
+    this.radius = 45,
     this.firstName,
     this.lastName,
     this.imageUrl,
+    this.onCameraTap,
   });
 
   @override
@@ -23,22 +25,55 @@ class ProfileAvatar extends StatelessWidget {
       if (lastName != null && lastName!.isNotEmpty) lastName![0],
     ].join().toUpperCase();
 
-    return CircleAvatar(
-      radius: radius,
-      backgroundColor: colors.blueSelected,
-      backgroundImage: imageUrl != null ? NetworkImage(imageUrl!) : null,
-      child: imageUrl == null
-          ? (initials.isNotEmpty
-              ? Text(
-                  initials,
-                  style: TextStyle(
+    return Center(
+      child: SizedBox(
+        width: radius * 2,
+        height: radius * 2,
+        child: Stack(
+          children: [
+            CircleAvatar(
+              radius: radius,
+              backgroundColor: colors.lightBlue,
+              backgroundImage: imageUrl != null && imageUrl!.isNotEmpty
+                  ? NetworkImage(imageUrl!)
+                  : null,
+              child: imageUrl == null || imageUrl!.isEmpty
+                  ? (initials.isNotEmpty
+                      ? Text(
+                          initials,
+                          style: TextStyle(
+                            color: colors.primary,
+                            fontSize: radius * 0.5,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )
+                      : Icon(Icons.person, size: radius * 0.8, color: colors.primary))
+                  : null,
+            ),
+            Positioned(
+              right: 0,
+              bottom: 0,
+              child: GestureDetector(
+                onTap: onCameraTap,
+                child: Container(
+                  width: 28,
+                  height: 28,
+                  decoration: BoxDecoration(
                     color: colors.primary,
-                    fontSize: radius * 0.6,
-                    fontWeight: FontWeight.w600,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: colors.white, width: 1.5),
                   ),
-                )
-              : Icon(Icons.person, size: radius, color: colors.primary))
-          : null,
+                  child: Icon(
+                    Icons.camera_alt_outlined,
+                    size: 15,
+                    color: colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

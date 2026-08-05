@@ -18,7 +18,7 @@ abstract class UserProfileApi {
   @GET(Endpoints.getUserInfo)
   Future<UserInfoResponse> getUserInfo();
 
-  @PUT(Endpoints.editUserProfile)
+  @PATCH(Endpoints.editUserProfile)
   Future<UserInfoResponse> editUserProfile(
     @Body() EditProfileRequestDto request,
   );

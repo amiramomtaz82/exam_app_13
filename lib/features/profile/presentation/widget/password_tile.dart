@@ -8,6 +8,7 @@ class PasswordTile extends StatefulWidget {
   final String? errorText;
   final TextInputType? keyboardType;
   final ValueChanged<String>? onChanged;
+  final TextEditingController? controller;
 
   const PasswordTile({
     super.key,
@@ -16,6 +17,7 @@ class PasswordTile extends StatefulWidget {
     this.errorText,
     this.keyboardType,
     this.onChanged,
+    this.controller,
   });
 
   @override
@@ -29,6 +31,7 @@ class _PasswordTileState extends State<PasswordTile> {
   Widget build(BuildContext context) {
     final AppColors colors = LightColors();
     return ProfileTextField(
+      controller: widget.controller,
       labelText: widget.label,
       hintText: widget.hintText,
       obscureText: _obscure,
@@ -38,8 +41,9 @@ class _PasswordTileState extends State<PasswordTile> {
       suffixIcon: IconButton(
         onPressed: () => setState(() => _obscure = !_obscure),
         icon: Icon(
-          _obscure ? Icons.visibility_off : Icons.visibility,
+          _obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined,
           color: colors.darkGrey,
+          size: 20,
         ),
       ),
     );

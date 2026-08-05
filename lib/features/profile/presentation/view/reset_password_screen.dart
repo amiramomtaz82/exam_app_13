@@ -20,18 +20,47 @@ class ResetPasswordScreen extends StatelessWidget {
   }
 }
 
-class ResetPasswordView extends StatelessWidget {
+class ResetPasswordView extends StatefulWidget {
   const ResetPasswordView({super.key});
+
+  @override
+  State<ResetPasswordView> createState() => _ResetPasswordViewState();
+}
+
+class _ResetPasswordViewState extends State<ResetPasswordView> {
+  final TextEditingController _oldPasswordController = TextEditingController();
+  final TextEditingController _newPasswordController = TextEditingController();
+  final TextEditingController _rePasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _oldPasswordController.dispose();
+    _newPasswordController.dispose();
+    _rePasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final AppColors colors = LightColors();
+
     return Scaffold(
+      backgroundColor: colors.background,
       appBar: AppBar(
-        backgroundColor: colors.primary,
-        foregroundColor: colors.white,
-        title: const Text('Change Password'),
-        centerTitle: true,
+        backgroundColor: colors.background,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new, color: colors.black, size: 18),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(
+          'Reset password',
+          style: TextStyle(
+            color: colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: BlocConsumer<ProfileCubit, ProfileState>(
         listener: (context, state) {
@@ -41,14 +70,21 @@ class ResetPasswordView extends StatelessWidget {
               ..showSnackBar(SnackBar(content: Text(state.errorMessage!)));
           } else if (state.status == ProfileStatus.success && Navigator.of(context).canPop()) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Password changed successfully')),
+              const SnackBar(content: Text('Password reset successfully')),
             );
             Navigator.of(context).pop(true);
           }
         },
         builder: (context, state) {
+          final cubit = context.read<ProfileCubit>();
+          final bool isFilled = state.oldPassword.isNotEmpty &&
+              state.newPassword.isNotEmpty &&
+              state.rePassword.isNotEmpty;
+          final bool isValid = state.isPasswordFormValid && isFilled;
+          final bool isLoading = state.status == ProfileStatus.loading;
+
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
             child: Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 480),
@@ -56,34 +92,34 @@ class ResetPasswordView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     PasswordTile(
-                      label: 'Current Password',
-                      errorText: _visibleError(state.oldPassword, state.oldPasswordError),
-                      onChanged: (value) => context
-                          .read<ProfileCubit>()
-                          .onIntent(UpdateFieldIntent(ProfileField.oldPassword, value)),
+                      controller: _oldPasswordController,
+                      label: 'Current password',
+                      errorText: state.oldPassword.isNotEmpty ? state.oldPasswordError : null,
+                      onChanged: (val) =>
+                          cubit.onIntent(UpdateFieldIntent(ProfileField.oldPassword, val)),
                     ),
+                    const SizedBox(height: 8),
                     PasswordTile(
-                      label: 'New Password',
-                      errorText: _visibleError(state.newPassword, state.newPasswordError),
-                      onChanged: (value) => context
-                          .read<ProfileCubit>()
-                          .onIntent(UpdateFieldIntent(ProfileField.newPassword, value)),
+                      controller: _newPasswordController,
+                      label: 'New password',
+                      errorText: state.newPassword.isNotEmpty ? state.newPasswordError : null,
+                      onChanged: (val) =>
+                          cubit.onIntent(UpdateFieldIntent(ProfileField.newPassword, val)),
                     ),
+                    const SizedBox(height: 8),
                     PasswordTile(
-                      label: 'Confirm New Password',
-                      errorText: _visibleError(state.rePassword, state.rePasswordError),
-                      onChanged: (value) => context
-                          .read<ProfileCubit>()
-                          .onIntent(UpdateFieldIntent(ProfileField.rePassword, value)),
+                      controller: _rePasswordController,
+                      label: 'Confirm password',
+                      errorText: state.rePassword.isNotEmpty ? state.rePasswordError : null,
+                      onChanged: (val) =>
+                          cubit.onIntent(UpdateFieldIntent(ProfileField.rePassword, val)),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 36),
                     ProfileButton(
-                      label: 'Update Password',
-                      isLoading: state.status == ProfileStatus.loading,
-                      onPressed: state.isPasswordFormValid && state.status != ProfileStatus.loading
-                          ? () => context
-                              .read<ProfileCubit>()
-                              .onIntent(const ChangePasswordIntent())
+                      label: 'Update',
+                      isLoading: isLoading,
+                      onPressed: isValid && !isLoading
+                          ? () => cubit.onIntent(const ChangePasswordIntent())
                           : null,
                     ),
                   ],
@@ -95,7 +131,4 @@ class ResetPasswordView extends StatelessWidget {
       ),
     );
   }
-
-  String? _visibleError(String value, String? error) =>
-      value.isNotEmpty ? error : null;
 }

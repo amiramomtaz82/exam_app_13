@@ -1,4 +1,18 @@
 abstract class Validation {
+  static String? validateUsername(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Username is required';
+    }
+    if (value.trim().length < 3) {
+      return 'Username must be at least 3 characters long';
+    }
+    final usernameRegex = RegExp(r'^[a-zA-Z0-9._-]+$');
+    if (!usernameRegex.hasMatch(value.trim())) {
+      return 'Username can only contain letters, numbers, . _ -';
+    }
+    return null;
+  }
+
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Email is required';

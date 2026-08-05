@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import '../app_theme/app_colors.dart';
 
 class AppTextFormField extends StatelessWidget {
-
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final String? hintText;
@@ -14,13 +13,17 @@ class AppTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool obscureText;
   final bool hasError;
+  final bool readOnly;
+  final bool enabled;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final ValueChanged<String>? onChanged;
   final List<TextInputFormatter>? inputFormatters;
   final AppColors? color;
+  final EdgeInsetsGeometry? padding;
 
-  const AppTextFormField({Key? key,
+  const AppTextFormField({
+    super.key,
     this.controller,
     this.focusNode,
     this.hintText,
@@ -28,31 +31,41 @@ class AppTextFormField extends StatelessWidget {
     this.validator,
     this.keyboardType,
     this.obscureText = false,
+    this.hasError = false,
+    this.readOnly = false,
+    this.enabled = true,
     this.prefixIcon,
     this.suffixIcon,
     this.inputFormatters,
     this.color,
-    this.hasError=false,
-    this.onChanged,}) : super(key: key,);
+    this.onChanged,
+    this.padding,
+  });
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal:16,vertical: 8),
-      child: TextFormField(autovalidateMode: AutovalidateMode.onUserInteraction,
-
-          controller: controller,
-          focusNode: focusNode,
-          validator: validator,
-          keyboardType: keyboardType,
-          obscureText: obscureText,
-          inputFormatters: inputFormatters,
-          onChanged: onChanged,
-          decoration: _buildInputDecoration()
+      padding: padding ?? const EdgeInsets.symmetric(vertical: 8),
+      child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        controller: controller,
+        focusNode: focusNode,
+        validator: validator,
+        keyboardType: keyboardType,
+        obscureText: obscureText,
+        readOnly: readOnly,
+        enabled: enabled,
+        inputFormatters: inputFormatters,
+        onChanged: onChanged,
+        style: TextStyle(
+          color: (color ?? LightColors()).textPrimary,
+          fontSize: 14,
+        ),
+        decoration: _buildInputDecoration(),
       ),
     );
   }
+
   InputDecoration _buildInputDecoration() {
     final AppColors colors = color ?? LightColors();
 
@@ -61,9 +74,42 @@ class AppTextFormField extends StatelessWidget {
       labelText: labelText,
       prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       labelStyle: TextStyle(
-        color: hasError ? colors.error : colors.textPrimary,
+        color: hasError ? colors.error : colors.darkGrey,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(6),
+        borderSide: BorderSide(
+          color: hasError ? colors.error : colors.darkGrey,
+          width: 1.2,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(6),
+        borderSide: BorderSide(
+          color: hasError ? colors.error : colors.primary,
+          width: 1.5,
+        ),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(6),
+        borderSide: BorderSide(
+          color: colors.error,
+          width: 1.2,
+        ),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(6),
+        borderSide: BorderSide(
+          color: colors.error,
+          width: 1.5,
+        ),
       ),
     );
   }
 }
+
