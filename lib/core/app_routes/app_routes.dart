@@ -1,18 +1,32 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:exam_app_13/features/profile/presentation/view/edit_profile_screen.dart';
+import 'package:exam_app_13/features/profile/presentation/view/profile_screen.dart';
+import 'package:exam_app_13/features/profile/presentation/view/reset_password_screen.dart';
 
-import '../../config/di/di.dart';
+abstract final class AppRoutes {
+  static Route<dynamic> profile() {
+    return MaterialPageRoute(builder: (_) => const ProfileScreen());
+  }
 
+  static Route<dynamic> editProfile({
+    required String username,
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String phone,
+  }) {
+    return MaterialPageRoute(
+      builder: (_) => EditProfileScreen(
+        username: username,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone,
+      ),
+    );
+  }
 
-
-
-// abstract final class AppRoutes {
-//   static MaterialPageRoute get editprofile =>
-//       MaterialPageRoute(builder: (_) => LoginScreen());
-
-//   static MaterialPageRoute get userinfo =>
-//       MaterialPageRoute(builder: (_) => RegisterScreen());
-
-
-//}
+  static Route<dynamic> resetPassword() {
+    return MaterialPageRoute(builder: (_) => const ResetPasswordScreen());
+  }
+}

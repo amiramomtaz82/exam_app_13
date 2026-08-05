@@ -8,10 +8,10 @@ class UserInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    // TODO: implement onRequest
-    super.onRequest(options, handler);
-    options.headers.addAll({
-      AppStrings.token: await SharedPrefsUtils().getToken(),
-    });
+    final String? token = await SharedPrefsUtils().getToken();
+    if (token != null && token.isNotEmpty) {
+      options.headers[AppStrings.token] = token;
+    }
+    handler.next(options);
   }
 }
