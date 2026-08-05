@@ -1,5 +1,5 @@
 import 'package:exam_app_13/config/base_response/base_response.dart';
-import 'package:exam_app_13/features/profile/domain/repo/Profile_repo.dart';
+import 'package:exam_app_13/features/profile/domain/repo/profile_repo.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton()

@@ -1,7 +1,7 @@
 import 'package:exam_app_13/config/di/di.dart';
 import 'package:exam_app_13/core/app_routes/app_routes.dart';
 import 'package:exam_app_13/core/app_theme/app_colors.dart';
-import 'package:exam_app_13/features/profile/domain/entities/Profile_entities.dart';
+import 'package:exam_app_13/features/profile/domain/entities/profile_entities.dart';
 import 'package:exam_app_13/features/profile/presentation/viewModel/profile_cubit.dart';
 import 'package:exam_app_13/features/profile/presentation/viewModel/profile_intent.dart';
 import 'package:exam_app_13/features/profile/presentation/viewModel/profile_state.dart';

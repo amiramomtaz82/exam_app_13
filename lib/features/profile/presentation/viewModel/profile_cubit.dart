@@ -1,9 +1,9 @@
 import 'package:exam_app_13/config/base_response/base_response.dart';
 import 'package:exam_app_13/config/validation/validation.dart';
-import 'package:exam_app_13/features/profile/domain/entities/Profile_entities.dart';
-import 'package:exam_app_13/features/profile/domain/usecases/Edit_password_usecases.dart';
-import 'package:exam_app_13/features/profile/domain/usecases/Edit_profile_usecases.dart';
-import 'package:exam_app_13/features/profile/domain/usecases/Profile_info_usecases.dart';
+import 'package:exam_app_13/features/profile/domain/entities/profile_entities.dart';
+import 'package:exam_app_13/features/profile/domain/usecases/edit_password_usecases.dart';
+import 'package:exam_app_13/features/profile/domain/usecases/edit_profile_usecases.dart';
+import 'package:exam_app_13/features/profile/domain/usecases/profile_info_usecases.dart';
 import 'package:exam_app_13/features/profile/presentation/viewModel/profile_intent.dart';
 import 'package:exam_app_13/features/profile/presentation/viewModel/profile_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

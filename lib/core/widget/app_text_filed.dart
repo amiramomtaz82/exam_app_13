@@ -46,23 +46,28 @@ class AppTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: padding ?? const EdgeInsets.symmetric(vertical: 8),
-      child: TextFormField(
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        controller: controller,
-        focusNode: focusNode,
-        validator: validator,
-        keyboardType: keyboardType,
-        obscureText: obscureText,
-        readOnly: readOnly,
-        enabled: enabled,
-        inputFormatters: inputFormatters,
-        onChanged: onChanged,
-        style: TextStyle(
-          color: (color ?? LightColors()).textPrimary,
-          fontSize: 14,
-        ),
-        decoration: _buildInputDecoration(),
+      child: _buildTextField(),
+    );
+  }
+
+  Widget _buildTextField() {
+    final AppColors colors = color ?? LightColors();
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      controller: controller,
+      focusNode: focusNode,
+      validator: validator,
+      keyboardType: keyboardType,
+      obscureText: obscureText,
+      readOnly: readOnly,
+      enabled: enabled,
+      inputFormatters: inputFormatters,
+      onChanged: onChanged,
+      style: TextStyle(
+        color: colors.textPrimary,
+        fontSize: 14,
       ),
+      decoration: _buildInputDecoration(),
     );
   }
 

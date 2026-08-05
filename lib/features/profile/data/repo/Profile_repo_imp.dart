@@ -1,12 +1,12 @@
 import 'package:exam_app_13/config/base_response/base_response.dart';
 import 'package:exam_app_13/config/shared_prefrences/shared_prefs.dart';
 import 'package:exam_app_13/features/profile/data/datasource/remote/user_repo_datasource.dart';
-import 'package:exam_app_13/features/profile/data/model/edit_Pass_Req.dart';
-import 'package:exam_app_13/features/profile/data/model/edit_Password_Req.dart';
+import 'package:exam_app_13/features/profile/data/model/edit_pass_req.dart';
+import 'package:exam_app_13/features/profile/data/model/edit_password_req.dart';
 import 'package:exam_app_13/features/profile/data/model/edit_profile_request_dto.dart';
 import 'package:exam_app_13/features/profile/data/model/user_dto.dart';
-import 'package:exam_app_13/features/profile/domain/entities/Profile_entities.dart';
-import 'package:exam_app_13/features/profile/domain/repo/Profile_repo.dart';
+import 'package:exam_app_13/features/profile/domain/entities/profile_entities.dart';
+import 'package:exam_app_13/features/profile/domain/repo/profile_repo.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: ProfileRepo)

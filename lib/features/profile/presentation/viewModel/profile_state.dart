@@ -1,4 +1,4 @@
-import 'package:exam_app_13/features/profile/domain/entities/Profile_entities.dart';
+import 'package:exam_app_13/features/profile/domain/entities/profile_entities.dart';
 import 'package:flutter/foundation.dart';
 
 class _Unset {

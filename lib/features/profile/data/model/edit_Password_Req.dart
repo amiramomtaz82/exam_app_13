@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-part 'edit_Password_Req.g.dart';
+part 'edit_password_req.g.dart';
 @JsonSerializable()
 class EditPassRespone {
     @JsonKey(name: "message")

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'config/di/di.dart';
-import 'config/shared_prefrences/shared_prefs.dart';
 import 'core/app_theme/app_theme.dart';
 import 'features/profile/presentation/view/profile_screen.dart';
 
