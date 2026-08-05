@@ -1,42 +1,24 @@
 import 'package:flutter/material.dart';
 
-
 abstract class AppColors {
   Color get primary;
-
   Color get secondary;
-
   Color get error;
-
   Color get success;
-
   Color get black;
-
   Color get white;
-
   Color get grey;
-
   Color get darkGrey;
-
   Color get background;
-
   Color get surface;
-
   Color get textPrimary;
-
   Color get textSecondary;
-
   Color get border;
-
   Color get hint;
-
   Color get lightBlue;
-
   Color get blueSelected;
-
   Color get bluePin;
 }
-
 
 class LightColors implements AppColors {
   @override
@@ -51,6 +33,7 @@ class LightColors implements AppColors {
   @override
   Color get success => const Color(0xFF1E9E45);
 
+  @override
   Color get bluePin => const Color(0xFFDFE7F7);
 
   @override
@@ -78,17 +61,14 @@ class LightColors implements AppColors {
   Color get textSecondary => darkGrey;
 
   @override
-  Color get border => black;
+  Color get border => const Color(0xff878787);
 
   @override
   Color get hint => grey;
 
   @override
-  // TODO: implement blueSelected
   Color get blueSelected => const Color(0xffCCD7EB);
 
   @override
-  // TODO: implement lightBlue
   Color get lightBlue => const Color(0xffEDEFF3);
-
 }

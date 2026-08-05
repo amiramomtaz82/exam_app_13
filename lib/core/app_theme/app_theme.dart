@@ -6,14 +6,14 @@ class AppTheme {
   AppTheme._();
 
   static final ThemeData lightTheme = _buildTheme(
-      LightColors(), Brightness.light);
-
+    LightColors(),
+    Brightness.light,
+  );
 
   static ThemeData _buildTheme(AppColors colors, Brightness brightness) {
     return ThemeData(
       useMaterial3: true,
       scaffoldBackgroundColor: colors.background,
-
       colorScheme: ColorScheme(
         brightness: brightness,
         primary: colors.primary,
@@ -25,7 +25,6 @@ class AppTheme {
         surface: colors.surface,
         onSurface: colors.textPrimary,
       ),
-
       appBarTheme: AppBarTheme(
         backgroundColor: colors.background,
         foregroundColor: colors.textPrimary,
@@ -34,12 +33,10 @@ class AppTheme {
         iconTheme: IconThemeData(color: colors.textPrimary),
         titleTextStyle: TextStyle(
           color: colors.textPrimary,
-          fontSize: 28,
-          fontWeight: FontWeight.w600,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
         ),
       ),
-
-      /// ----------------------- Text theme----------------------///
       textTheme: TextTheme(
         titleLarge: TextStyle(
           fontSize: 20,
@@ -59,16 +56,14 @@ class AppTheme {
           color: colors.hint,
         ),
       ),
-
-      ///--------------- text Field -------------------///
       inputDecorationTheme: InputDecorationTheme(
         floatingLabelBehavior: FloatingLabelBehavior.always,
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 20,
+          horizontal: 16,
+          vertical: 16,
         ),
         labelStyle: TextStyle(
-          fontSize: 18,
+          fontSize: 14,
           fontWeight: FontWeight.w500,
           color: colors.darkGrey,
         ),
@@ -77,45 +72,43 @@ class AppTheme {
           color: colors.hint,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(6),
           borderSide: BorderSide(
             color: colors.border,
             width: 1.2,
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(6),
           borderSide: BorderSide(
             color: colors.border,
             width: 1.2,
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(6),
           borderSide: BorderSide(
-            color: colors.border,
+            color: colors.primary,
             width: 1.5,
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(6),
           borderSide: BorderSide(
             color: colors.error,
             width: 1.2,
           ),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(6),
           borderSide: BorderSide(
             color: colors.error,
             width: 1.5,
           ),
         ),
       ),
-      //------------------Snack Bar-------------------
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: colors.darkGrey
-        ,
+        backgroundColor: colors.darkGrey,
         contentTextStyle: TextStyle(
           color: colors.white,
           fontSize: 16,
@@ -128,20 +121,15 @@ class AppTheme {
         ),
         actionTextColor: colors.primary,
       ),
-
-
-
-      ///---------------- Elevated button ------------------------////
-
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: colors.primary,
-          foregroundColor: Colors.white,
+          foregroundColor: colors.white,
           disabledBackgroundColor: colors.darkGrey,
           disabledForegroundColor: colors.white,
-          minimumSize: const Size(double.infinity, 52),
+          minimumSize: const Size(double.infinity, 50),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(25),
           ),
           textStyle: const TextStyle(
             fontSize: 16,
@@ -149,13 +137,11 @@ class AppTheme {
           ),
         ),
       ),
-      //-------------------Navigation Bar---------------------
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: colors.lightBlue,
         elevation: 0,
         height: 70,
         indicatorColor: colors.blueSelected,
-
         iconTheme: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
             return IconThemeData(
@@ -163,22 +149,19 @@ class AppTheme {
               size: 24,
             );
           }
-
           return IconThemeData(
             color: colors.darkGrey,
             size: 24,
           );
         }),
-
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
             return TextStyle(
-              fontSize: 14,
+              fontSize: 12,
               fontWeight: FontWeight.w600,
-              color:colors.primary,
+              color: colors.primary,
             );
           }
-
           return TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w500,
@@ -186,8 +169,6 @@ class AppTheme {
           );
         }),
       ),
-
-
     );
   }
 }
