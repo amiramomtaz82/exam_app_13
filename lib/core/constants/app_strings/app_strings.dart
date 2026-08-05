@@ -14,6 +14,7 @@ abstract class AppStrings {
   static const String dontHaveAccount = "Don't have an account?";
 
   static const String signeUp = "Signe up";
+  static const String token = "token";
 
 //-------------------------------------------------------------------
   static const String thisEmailNotValid = "This email is not valid";
