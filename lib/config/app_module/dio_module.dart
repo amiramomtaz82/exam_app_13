@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:exam_app_13/features/subject/api/interceptor/subject_interceptor.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 
 import '../../core/constants/app_strings/endpoints.dart';
-import '../../features/auth/api/interceptor/auth_interceptor.dart';
+
 
 @module
 abstract class DioModule {
@@ -18,7 +19,7 @@ abstract class DioModule {
       ),
     );
 
-    dioInstance.interceptors.add(AuthInterceptor());
+    dioInstance.interceptors.add(SubjectInterceptor());
     dioInstance.interceptors.add(
       PrettyDioLogger(
         requestBody: true,
