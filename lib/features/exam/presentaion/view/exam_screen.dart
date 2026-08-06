@@ -43,19 +43,23 @@ class _ExamScreenState extends State<ExamScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       isTimeUp
-                          ? SizedBox(height: 80,width: 200,
+                          ? SizedBox(
+                              height: 80,
+                              width: 200,
 
                               child: Row(
-                  children: [
-                      Image.asset(AppAssets.sandClock),
-                  const SizedBox(width: 8),
-                  Text(
-                    AppStrings.timeOut,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  )
-                  ]
+                                children: [
+                                  Image.asset(AppAssets.sandClock),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    AppStrings.timeOut,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.headlineSmall,
+                                  ),
+                                ],
+                              ),
                             )
-                      )
                           : Column(
                               children: [
                                 Icon(
@@ -72,24 +76,27 @@ class _ExamScreenState extends State<ExamScreen> {
 
                       const SizedBox(height: 40),
 
-
-
                       SizedBox(
                         width: 190,
-                        child: ElevatedButton(style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),),),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                          ),
                           onPressed: () {
-
                             Navigator.pop(context);
-
 
                             Navigator.push(
                               context,
-                              AppRoutes.examScoreScreen(state.score,context.read<ExamCubit>()),
+                              AppRoutes.examScoreScreen(
+                                state.score,
+                                context.read<ExamCubit>(),
+                                widget.examId,
+                              ),
                             );
                           },
-                          child:  Text(AppStrings.viewScore),
+                          child: Text(AppStrings.viewScore),
                         ),
                       ),
                     ],
@@ -123,7 +130,7 @@ class _ExamScreenState extends State<ExamScreen> {
             title: Text(AppStrings.exam),
             centerTitle: false,
             actions: [
-            Image.asset(AppAssets.clock),
+              Image.asset(AppAssets.clock),
               SizedBox(width: 7),
               Text(
                 cubit.formattedTime,
@@ -219,7 +226,7 @@ class _ExamScreenState extends State<ExamScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 150),
+              SizedBox(height: 100),
             ],
           ),
         );

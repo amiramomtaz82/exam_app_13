@@ -6,10 +6,13 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/app_routes/app_routes.dart';
+
 class ExamScoreScreen extends StatelessWidget {
   int examScore;
+  final String examId;
 
-  ExamScoreScreen({super.key, required this.examScore});
+  ExamScoreScreen({super.key, required this.examScore,required this.examId});
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +83,7 @@ class ExamScoreScreen extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Text(AppStrings.correct,style: Theme.of(context).textTheme.titleMedium,),
+                                  Text(AppStrings.correct,style: Theme.of(context).textTheme.titleMedium?.copyWith(color: colors.primary),),
 
                                   SizedBox(width:65),
                                   Container(
@@ -133,6 +136,43 @@ class ExamScoreScreen extends StatelessWidget {
                 );
               },
             ),
+            SizedBox(height: 80,),
+            ElevatedButton( style: ElevatedButton.styleFrom( shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),),
+
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  AppRoutes.examResultScreen(
+                    context.read<ExamCubit>(),
+                  ),
+                );
+              },
+              child:  Text(AppStrings.showResult),
+            )
+      ,
+      SizedBox(height: 30,),
+
+            ElevatedButton(
+
+              style: ElevatedButton.styleFrom(
+              foregroundColor: colors.primary,
+              backgroundColor: colors.white,
+              side: BorderSide(color: colors.primary),
+                  shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+
+            ),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  AppRoutes.examScreen(examId),
+                );
+              },
+              child:  Text(AppStrings.startAgain),
+            )
           ],
         ),
       ),

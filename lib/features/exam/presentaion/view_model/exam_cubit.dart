@@ -19,6 +19,7 @@ class ExamCubit extends Cubit<ExamState> {
   final List<QuestionItem> _questions = [];
   Timer? _timer;
   int _remainingSeconds = 10 * 60;
+  String? _examId;
 
   ExamCubit(this._getAllQuestionsUsecase) : super(ExamState.initial());
 
@@ -47,6 +48,7 @@ class ExamCubit extends Cubit<ExamState> {
   //=========================================================================
 
   Future<void> _loadQuestions(String examId) async {
+    _examId=examId;
     emit(state.copyWith(questionsResource: Resource.loading()));
 
     final response = await _getAllQuestionsUsecase.call(examId);
@@ -67,6 +69,7 @@ class ExamCubit extends Cubit<ExamState> {
             currentQuestionIndex: 0,
 
             remainingTime:examDuration,
+
           ),
         );
         _startTimer();
@@ -145,6 +148,11 @@ class ExamCubit extends Cubit<ExamState> {
       }
     });
   }
+  Future<void> restartExam() async {
+    if (_examId != null) {
+      await _loadQuestions(_examId!);
+    }
+  }
 
   QuestionItem? get currentQuestion {
     if (_questions.isEmpty) return null;
@@ -190,9 +198,29 @@ class ExamCubit extends Cubit<ExamState> {
     return '${minutes.toString().padLeft(2, '0')}:'
         '${seconds.toString().padLeft(2, '0')}';
   }
-  double get scorePercentage{
 
-    final double scorePercentage =_calculateScore()/totalQuestions.toDouble();
-    return scorePercentage;
+
+    double get scorePercentage {
+      if (totalQuestions == 0) return 0;
+
+      return state.score / totalQuestions;
+    }
+  @override
+  Future<void> close() {
+    _timer?.cancel();
+    return super.close();
+  }
+
+  List<QuestionItem> get questions => List.unmodifiable(_questions);
+
+  String? get examId => _examId;
+
+
+  bool isCorrect(QuestionItem item) {
+    return item.selectedAnswerKey == item.question.correctAnswerKey;
+  }
+
+  String? selectedAnswer(QuestionItem item) {
+    return item.selectedAnswerKey;
   }
 }
