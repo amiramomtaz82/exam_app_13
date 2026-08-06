@@ -1,3 +1,4 @@
+import 'package:exam_app_13/features/exam/presentaion/view_model/exam_finish_reason.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../config/base_state/resource.dart';
@@ -15,6 +16,7 @@ class ExamState {
   final int score;
 
   final bool isSubmitting;
+  ExamFinishReason? finishReason;
 
   ExamState({
     required this.questionsResource,
@@ -23,6 +25,7 @@ class ExamState {
     required this.isSubmitting,
     required this.examFinished,
     required this.score,
+    required this.finishReason
   });
 
   factory ExamState.initial() {
@@ -33,6 +36,8 @@ class ExamState {
       isSubmitting: false,
       examFinished: false,
       score: 0,
+      finishReason: ExamFinishReason.none
+
     );
   }
 
@@ -43,6 +48,7 @@ class ExamState {
     bool? examFinished,
     int? score,
     bool? isSubmitting,
+    ExamFinishReason? finishedReason
   }) {
     return ExamState(
       questionsResource: questionsResource ?? this.questionsResource,
@@ -51,6 +57,7 @@ class ExamState {
       examFinished: examFinished ?? this.examFinished,
       score: score ?? this.score,
       isSubmitting: isSubmitting ?? this.isSubmitting,
+      finishReason: finishedReason?? this.finishReason
     );
   }
 }

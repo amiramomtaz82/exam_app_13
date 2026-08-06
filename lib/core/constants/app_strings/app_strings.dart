@@ -38,5 +38,20 @@ static const String survey="Survey";
   static const String dummyExamID="69d980117c82914570305dd5";
 
   static const String exam="Exam";
+  static const String examScore="Exam score";
   static const String question  ="Question";
+  static const String back  ="Back";
+  static const String next ="Next";
+  static const String finished ="Finished";
+  static const String yourScore  ="Your score";
+  static const String correct  ="correct";
+  static const String showResult  ="Show result";
+  static const String startAgain  ="Start again";
+  static const String viewScore  ="View score";
+  static const String timeOut  ="Time out !!";
+
+
+  static const String incorrect  ="incorrect";
+
+  static const String examFinished  ="Exam Finished !!";
 }
