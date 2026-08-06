@@ -24,8 +24,7 @@ class SubjectCubit extends Cubit<SubjectState> {
   }
 
   Future<void> _getAllSubjects() async {
-print("====================================================");
-    print("Loading subjects...");
+
     emit(
       state.copyWith(
         subjectsResource:  Resource.loading(),

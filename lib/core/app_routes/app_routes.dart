@@ -12,14 +12,7 @@ import '../../features/subject/presentation/view_model/subject_cubit.dart';
 
 
 abstract final class AppRoutes {
-  static MaterialPageRoute get subjectScreen => MaterialPageRoute(
-      builder: (_) =>
-          BlocProvider(
-              create: (_)
-              => getIt<SubjectCubit>()..doEvents(GetAllSubjectsEvent()),
 
-              child:
-              SubjectScreen()));
   static MaterialPageRoute get login =>
       MaterialPageRoute(builder: (_) => LoginScreen());
 
