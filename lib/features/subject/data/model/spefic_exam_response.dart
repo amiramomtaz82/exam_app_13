@@ -1,9 +1,7 @@
-
 import 'package:exam_app_13/features/subject/data/model/subject_exam_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'specfic_exam_response.g.dart';
-
+part 'spefic_exam_response.g.dart';
 
 @JsonSerializable()
 class SpecficExamResponseApi {

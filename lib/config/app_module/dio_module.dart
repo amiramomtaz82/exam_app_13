@@ -1,11 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:exam_app_13/features/subject/api/api_client/subject_api_client.dart';
 import 'package:exam_app_13/features/subject/api/interceptor/subject_interceptor.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-
 import '../../core/constants/app_strings/endpoints.dart';
-
 
 @module
 abstract class DioModule {
@@ -31,4 +30,7 @@ abstract class DioModule {
 
     return dioInstance;
   }
+
+  @lazySingleton
+  SubjectApiClient subjectApiClient(Dio dio) => SubjectApiClient(dio);
 }
