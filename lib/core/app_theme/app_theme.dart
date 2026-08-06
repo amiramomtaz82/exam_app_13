@@ -35,32 +35,16 @@ class AppTheme {
         titleTextStyle: TextStyle(
           color: colors.textPrimary,
           fontSize: 28,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
         ),
       ),
 
       /// ----------------------- Text theme----------------------///
-      textTheme:
-      TextTheme(
-        titleMedium: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.w400,
-          color: colors.primary,
-        ),
-        headlineMedium: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-          color: colors.textPrimary,
-        ),
+      textTheme: TextTheme(
         titleLarge: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w600,
           color: colors.textPrimary,
-        ),
-       headlineSmall: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.w600,
-          color: colors.error,
         ),
         bodyLarge: TextStyle(
           fontSize: 18,
@@ -152,7 +136,9 @@ class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: colors.primary,
-          foregroundColor: colors.white,
+          foregroundColor: Colors.white,
+          disabledBackgroundColor: colors.darkGrey,
+          disabledForegroundColor: colors.white,
           minimumSize: const Size(double.infinity, 52),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),

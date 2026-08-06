@@ -77,12 +77,22 @@ class SubjectScreen extends StatelessWidget {
 
                     }
                     final subjects=state.filteredSubjects;
+                    if (subjects.isEmpty) {
+                      return const Expanded(
+                        child: Center(
+                          child: Text(
+                            'No subjects found.',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      );
+                    }
 
                        return
                          Expanded(
                            child: ListView.builder(itemCount: subjects.length,
                                itemBuilder:(context,index)=>
-                                   subjectView(subjects[index])),
+                                  SubjectView(subject: subjects[index],)),
                          );
                   }
                 )

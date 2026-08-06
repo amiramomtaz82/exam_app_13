@@ -6,13 +6,13 @@ import 'package:exam_app_13/features/subject/data/data_source/subject_remote_dat
 import 'package:exam_app_13/features/subject/data/model/response/all_subject_response.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../data/model/response/subjectDTO.dart';
+import '../../data/model/response/subject_dto.dart';
 
 @Injectable(as:SubjectRemoteDataSource)
 
-class SubjectRemoteDataSourceImp extends SubjectRemoteDataSource{
+class SubjectRemoteDataSourceImp implements SubjectRemoteDataSource{
 
-  SubjectApiClient subjectApiClient;
+  final SubjectApiClient subjectApiClient;
   SubjectRemoteDataSourceImp (this.subjectApiClient);
 
   @override

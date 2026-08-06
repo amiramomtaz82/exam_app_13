@@ -1,4 +1,4 @@
-import 'package:exam_app_13/features/subject/data/model/response/subjectDTO.dart';
+import 'package:exam_app_13/features/subject/data/model/response/subject_dto.dart';
 
 /// message : "success"
 /// metadata : {"currentPage":1,"numberOfPages":1,"limit":40}

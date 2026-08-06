@@ -1,4 +1,6 @@
-class SubjectEntity {
+import 'package:equatable/equatable.dart';
+
+class SubjectEntity extends Equatable{
   final String id;
   final String name;
   final String icon;
@@ -10,4 +12,8 @@ class SubjectEntity {
     required this.icon,
     required this.createdAt,
   });
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [name,id,icon,createdAt];
 }
