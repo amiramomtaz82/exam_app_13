@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
+
 import 'answer_entity.dart';
 
-class QuestionEntity {
+class QuestionEntity extends Equatable {
   final String id;
   final String question;
   final List<AnswerEntity> answers;
@@ -14,4 +16,8 @@ class QuestionEntity {
     required this.type,
     required this.correctAnswerKey,
   });
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [id,question,answers,type,correctAnswerKey];
 }

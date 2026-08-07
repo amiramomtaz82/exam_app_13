@@ -128,6 +128,7 @@ class ExamCubit extends Cubit<ExamState> {
       finishedReason: reason,
         examFinished: true,
         score: score));
+
   }
 
   //---------------------------------------------

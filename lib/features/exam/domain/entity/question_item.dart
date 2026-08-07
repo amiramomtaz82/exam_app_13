@@ -1,9 +1,10 @@
 
 
 
+import 'package:equatable/equatable.dart';
 import 'package:exam_app_13/features/exam/domain/entity/questions_entity.dart';
 
-class QuestionItem {
+class QuestionItem extends Equatable{
 
   final QuestionEntity question;
 
@@ -20,4 +21,8 @@ class QuestionItem {
   bool get isCorrect =>
       selectedAnswerKey ==
           question.correctAnswerKey;
+
+  @override
+  // TODO: implement props
+  List<Object?> get props =>[question,selectedAnswerKey];
 }

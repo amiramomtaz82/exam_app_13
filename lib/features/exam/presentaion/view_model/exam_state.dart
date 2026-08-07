@@ -1,10 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:exam_app_13/features/exam/presentaion/view_model/exam_finish_reason.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../config/base_state/resource.dart';
 import '../../domain/entity/question_item.dart';
 
-class ExamState {
+class ExamState extends Equatable {
   final Resource<List<QuestionItem>> questionsResource;
 
   final int currentQuestionIndex;
@@ -60,4 +61,9 @@ class ExamState {
       finishReason: finishedReason?? this.finishReason
     );
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [questionsResource,currentQuestionIndex,remainingTime,
+  examFinished,isSubmitting,finishReason,score];
 }
