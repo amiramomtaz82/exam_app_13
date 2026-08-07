@@ -45,11 +45,11 @@ abstract final class AppRoutes {
           child: const ReviewAnswerScreen(),
         ),
       );
-  static MaterialPageRoute examScoreScreen(int examScore, ExamCubit cubit,String examId) =>
+  static MaterialPageRoute examScoreScreen( ExamCubit cubit,String examId) =>
       MaterialPageRoute(
         builder: (_) => BlocProvider.value(
           value: cubit,
-          child: ExamScoreScreen(examScore: examScore,examId: examId,),
+          child: ExamScoreScreen(examId: examId,),
         ),
       );
 }

@@ -12,7 +12,7 @@ import '../view_model/exam_event.dart';
 import '../view_model/exam_finish_reason.dart';
 
 class ExamScreen extends StatefulWidget {
-  String examId;
+  final String examId;
 
   ExamScreen({super.key, required this.examId});
 
@@ -21,13 +21,24 @@ class ExamScreen extends StatefulWidget {
 }
 
 class _ExamScreenState extends State<ExamScreen> {
+late int minutes;
+late int seconds;
   @override
   Widget build(BuildContext context) {
     AppColors colors = LightColors();
     return BlocConsumer<ExamCubit, ExamState>(
       listener: (context, state) {
+        final duration = state.remainingTime;
+
+      minutes =
+        duration.inMinutes.remainder(60);
+
+       seconds =
+        duration.inSeconds.remainder(60);
+
+
         if (state.examFinished) {
-          final isTimeUp = state.finishReason == ExamFinishReason.timer;
+          final isTimeUp = state.finishReason == FinishReason.timer;
 
           showDialog(
             context: context,
@@ -90,7 +101,7 @@ class _ExamScreenState extends State<ExamScreen> {
                             Navigator.push(
                               context,
                               AppRoutes.examScoreScreen(
-                                state.score,
+
                                 context.read<ExamCubit>(),
                                 widget.examId,
                               ),
@@ -124,7 +135,9 @@ class _ExamScreenState extends State<ExamScreen> {
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+                },
               icon: Icon(Icons.arrow_back_ios),
             ),
             title: Text(AppStrings.exam),
@@ -132,8 +145,9 @@ class _ExamScreenState extends State<ExamScreen> {
             actions: [
               Image.asset(AppAssets.clock),
               SizedBox(width: 7),
-              Text(
-                cubit.formattedTime,
+              Text('${minutes.toString().padLeft(2,'0')}:'
+                  '${seconds.toString().padLeft(2,'0')}',
+
                 style: Theme.of(
                   context,
                 ).textTheme.titleLarge?.copyWith(color: colors.success),
@@ -147,7 +161,7 @@ class _ExamScreenState extends State<ExamScreen> {
               SizedBox(height: 10),
               Center(
                 child: Text(
-                  "${AppStrings.question} ${cubit.currentIndex} of${cubit.totalQuestions}",
+                  "${AppStrings.question} ${state.currentQuestionIndex} of${state.questions.length}",
                 ),
               ),
               const SizedBox(height: 8),
@@ -155,7 +169,7 @@ class _ExamScreenState extends State<ExamScreen> {
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: LinearProgressIndicator(
-                  value: cubit.progressValue,
+                  value: state.questions.isEmpty?0:(state.currentQuestionIndex+1)/state.questions.length,
                   minHeight: 6,
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -174,8 +188,8 @@ class _ExamScreenState extends State<ExamScreen> {
 
               Expanded(
                 child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+
+
                   itemCount: questionItem.question.answers.length,
                   itemBuilder: (context, index) {
                     final answer = questionItem.question.answers[index];
@@ -211,14 +225,14 @@ class _ExamScreenState extends State<ExamScreen> {
                     SizedBox(width: 16),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: cubit.isLastQuestion
+                        onPressed:state.currentQuestionIndex==state.questions.length-1
                             ? () {
                                 cubit.doEvents(FinishExamEvent());
                               }
                             : () {
                                 cubit.doEvents(NextQuestionEvent());
                               },
-                        child: cubit.isLastQuestion
+                        child: state.currentQuestionIndex==state.questions.length-1
                             ? Text(AppStrings.finished)
                             : Text(AppStrings.next),
                       ),

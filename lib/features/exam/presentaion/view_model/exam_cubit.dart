@@ -8,20 +8,20 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../config/base_response/base_response.dart';
 import '../../../../config/base_state/resource.dart';
-import '../../domain/entity/question_item.dart';
+import '../question_item.dart';
 import '../../domain/entity/questions_entity.dart';
 import 'exam_event.dart';
 import 'exam_state.dart';
 
 @injectable
 class ExamCubit extends Cubit<ExamState> {
-  final GetAllQuestionsUsecase _getAllQuestionsUsecase;
-  final List<QuestionItem> _questions = [];
-  Timer? _timer;
-  int _remainingSeconds = 10 * 60;
-  String? _examId;
+  final GetAllQuestionsUsecase _getAllQuestionsUseCase;
 
-  ExamCubit(this._getAllQuestionsUsecase) : super(ExamState.initial());
+  Timer? _timer;
+
+
+
+  ExamCubit(this._getAllQuestionsUseCase) : super(ExamState.initial());
 
   Future<void> doEvents(ExamEvents event) async {
     switch (event) {
@@ -38,38 +38,38 @@ class ExamCubit extends Cubit<ExamState> {
         _previousQuestion();
 
       case FinishExamEvent():
-        _finishExam(ExamFinishReason.user);
+        _finishExam(FinishReason.user);
 
       case TimerFinishedEvent():
-        _finishExam(ExamFinishReason.timer);
+        _finishExam(FinishReason.timer);
     }
   }
 
   //=========================================================================
 
   Future<void> _loadQuestions(String examId) async {
-    _examId=examId;
+
     emit(state.copyWith(questionsResource: Resource.loading()));
 
-    final response = await _getAllQuestionsUsecase.call(examId);
+    final response = await _getAllQuestionsUseCase.call(examId);
 
     switch (response) {
       case SuccessResponse<List<QuestionEntity>>():
-        _questions.clear();
 
-        _questions.addAll(
-          response.data.map((question) => QuestionItem(question: question)),
-        );
-        final examDuration=Duration(minutes:2 );
-        _remainingSeconds = examDuration.inSeconds;
+        final questions =
+        response.data
+            .map((q) => QuestionItem(question: q))
+            .toList();
 
+        final examDuration = Duration(minutes: 2);
         emit(
           state.copyWith(
-            questionsResource: Resource.success(List.from(_questions)),
+            questionsResource:
+            Resource.success(questions),
+            questions: questions,
             currentQuestionIndex: 0,
-
-            remainingTime:examDuration,
-
+            remainingTime: examDuration,
+            examId: examId,
           ),
         );
         _startTimer();
@@ -85,22 +85,28 @@ class ExamCubit extends Cubit<ExamState> {
 
   //---------------------------------
   void _selectAnswer(String answerKey) {
-    if (_questions.isEmpty) return;
 
+
+    final updatedQuestions =
+    List<QuestionItem>.from(state.questions);
     final index = state.currentQuestionIndex;
-
-    _questions[index].selectedAnswerKey = answerKey;
+    updatedQuestions[index] =
+        updatedQuestions[index].copyWith(
+          selectedAnswerKey: answerKey,
+        );
 
     emit(
       state.copyWith(
-        questionsResource: Resource.success(List.from(_questions)),
+        questions: updatedQuestions,
+        questionsResource:
+        Resource.success(updatedQuestions),
       ),
     );
   }
 
   //-------------------------------------------------
   void _nextQuestion() {
-    if (state.currentQuestionIndex >= _questions.length - 1) {
+    if (state.currentQuestionIndex >= state.questions.length-1) {
       return;
     }
 
@@ -118,17 +124,15 @@ class ExamCubit extends Cubit<ExamState> {
 
   //-----------------------------------------------
 
-  void _finishExam(ExamFinishReason reason) {
-    if(state.examFinished)return;
+  void _finishExam(FinishReason reason) {
+    if (state.examFinished) return;
     _timer?.cancel();
 
     final score = _calculateScore();
 
-    emit(state.copyWith(
-      finishedReason: reason,
-        examFinished: true,
-        score: score));
-
+    emit(
+      state.copyWith(finishReason: reason, examFinished: true, score: score),
+    );
   }
 
   //---------------------------------------------
@@ -136,52 +140,44 @@ class ExamCubit extends Cubit<ExamState> {
     _timer?.cancel();
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_remainingSeconds > 0) {
-        _remainingSeconds--;
+      final remainingSeconds = state.remainingTime.inSeconds;
 
+      if (remainingSeconds > 0) {
         emit(
-          state.copyWith(remainingTime: Duration(seconds: _remainingSeconds)),
+          state.copyWith(
+            remainingTime: Duration(
+              seconds: remainingSeconds - 1,
+            ),
+          ),
         );
       } else {
         timer.cancel();
-
         doEvents(TimerFinishedEvent());
       }
     });
   }
   Future<void> restartExam() async {
-    if (_examId != null) {
-      await _loadQuestions(_examId!);
+    if (state.examId != null) {
+      await _loadQuestions(state.examId!);
     }
   }
-
+//------------------------------------------------
   QuestionItem? get currentQuestion {
-    if (_questions.isEmpty) return null;
+    if (state.questions.isEmpty) return null;
 
-    return _questions[state.currentQuestionIndex];
+    return state.questions[state.currentQuestionIndex];
   }
 
-  int get totalQuestions => _questions.length;
 
-  int get currentIndex => state.currentQuestionIndex;
-  int get incorrectAnswers => totalQuestions - state.score;
 
-  String get progress => "${currentIndex + 1}/$totalQuestions";
 
-  bool get isFirstQuestion => currentIndex == 0;
 
-  bool get isLastQuestion => currentIndex == totalQuestions - 1;
 
-  double get progressValue {
-    if (totalQuestions == 0) return 0;
-
-    return (currentIndex + 1) / totalQuestions;
-  }
 
   int _calculateScore() {
     int score = 0;
 
-    for (final item in _questions) {
+    for (final item in state.questions) {
       if (item.selectedAnswerKey == item.question.correctAnswerKey) {
         score++;
       }
@@ -190,38 +186,20 @@ class ExamCubit extends Cubit<ExamState> {
     return score;
   }
 
-  String get formattedTime {
-    final time = state.remainingTime;
-
-    final minutes = time.inMinutes.remainder(60);
-    final seconds = time.inSeconds.remainder(60);
-
-    return '${minutes.toString().padLeft(2, '0')}:'
-        '${seconds.toString().padLeft(2, '0')}';
-  }
 
 
-    double get scorePercentage {
-      if (totalQuestions == 0) return 0;
 
-      return state.score / totalQuestions;
-    }
   @override
   Future<void> close() {
     _timer?.cancel();
     return super.close();
   }
 
-  List<QuestionItem> get questions => List.unmodifiable(_questions);
-
-  String? get examId => _examId;
 
 
-  bool isCorrect(QuestionItem item) {
-    return item.selectedAnswerKey == item.question.correctAnswerKey;
-  }
 
-  String? selectedAnswer(QuestionItem item) {
-    return item.selectedAnswerKey;
-  }
+
+
+
+
 }

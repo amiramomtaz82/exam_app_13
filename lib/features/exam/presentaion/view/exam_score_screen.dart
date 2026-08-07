@@ -9,14 +9,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/app_routes/app_routes.dart';
 
 class ExamScoreScreen extends StatelessWidget {
-  int examScore;
   final String examId;
 
-  ExamScoreScreen({super.key, required this.examScore,required this.examId});
+  ExamScoreScreen({super.key, required this.examId});
 
   @override
   Widget build(BuildContext context) {
-    AppColors colors=LightColors();
+    AppColors colors = LightColors();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -32,16 +31,20 @@ class ExamScoreScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Container(width:double.infinity
-                ,child: Text(AppStrings.yourScore
-                  ,textAlign: TextAlign.left,
-                style: Theme.of(context).textTheme.titleLarge,)),
+            Container(
+              width: double.infinity,
+              child: Text(
+                AppStrings.yourScore,
+                textAlign: TextAlign.left,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ),
             SizedBox(height: 10),
             BlocBuilder<ExamCubit, ExamState>(
               builder: (context, state) {
                 final ExamCubit cubit = context.read<ExamCubit>();
                 return Column(
-                  children:[
+                  children: [
                     Row(
                       children: [
                         Stack(
@@ -56,14 +59,16 @@ class ExamScoreScreen extends StatelessWidget {
                                   sectionsSpace: 10,
                                   sections: [
                                     PieChartSectionData(
-                                      value: cubit.incorrectAnswers.toDouble(),
+                                      value:
+                                          (state.questions.length - state.score)
+                                              .toDouble(),
                                       color: colors.error,
                                       radius: 10,
                                       showTitle: false,
                                     ),
                                     PieChartSectionData(
                                       value: state.score.toDouble(),
-                                      color:colors.primary,
+                                      color: colors.primary,
                                       radius: 10,
                                       showTitle: false,
                                     ),
@@ -72,8 +77,8 @@ class ExamScoreScreen extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "${cubit.scorePercentage.toStringAsFixed(1)}%",
-                              style: Theme.of(context).textTheme.headlineMedium
+                              "${(state.score / state.questions.length).toStringAsFixed(1)}%",
+                              style: Theme.of(context).textTheme.headlineMedium,
                             ),
                           ],
                         ),
@@ -83,9 +88,15 @@ class ExamScoreScreen extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Text(AppStrings.correct,style: Theme.of(context).textTheme.titleMedium?.copyWith(color: colors.primary),),
+                                  Text(
+                                    AppStrings.correct,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(color: colors.primary),
+                                  ),
 
-                                  SizedBox(width:65),
+                                  SizedBox(width: 65),
                                   Container(
                                     width: 30,
                                     height: 30,
@@ -98,16 +109,23 @@ class ExamScoreScreen extends StatelessWidget {
                                     ),
                                     alignment: Alignment.center,
 
-                                    child: Text("${state.score}",style: TextStyle(color: colors.primary),),
+                                    child: Text(
+                                      "${state.score}",
+                                      style: TextStyle(color: colors.primary),
+                                    ),
                                   ),
-
-
                                 ],
                               ),
-                              SizedBox(height: 20,),
+                              SizedBox(height: 20),
                               Row(
                                 children: [
-                                  Text(AppStrings.incorrect,style: Theme.of(context).textTheme.titleMedium?.copyWith(color: colors.error),),
+                                  Text(
+                                    AppStrings.incorrect,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(color: colors.error),
+                                  ),
                                   SizedBox(width: 50),
                                   Container(
                                     width: 30,
@@ -116,13 +134,14 @@ class ExamScoreScreen extends StatelessWidget {
                                       shape: BoxShape.circle,
                                       border: Border.all(
                                         color: colors.error,
-                                        width:1,
+                                        width: 1,
                                       ),
                                     ),
                                     alignment: Alignment.center,
 
                                     child: Text(
-                                      "${cubit.incorrectAnswers}",style: TextStyle(color: colors.error),
+                                      "${state.questions.length - state.score}",
+                                      style: TextStyle(color: colors.error),
                                     ),
                                   ),
                                 ],
@@ -136,43 +155,41 @@ class ExamScoreScreen extends StatelessWidget {
                 );
               },
             ),
-            SizedBox(height: 80,),
-            ElevatedButton( style: ElevatedButton.styleFrom( shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),),
+            SizedBox(height: 80),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                ),
+              ),
 
               onPressed: () {
                 Navigator.push(
                   context,
-                  AppRoutes.examResultScreen(
-                    context.read<ExamCubit>(),
-                  ),
+                  AppRoutes.examResultScreen(context.read<ExamCubit>()),
                 );
               },
-              child:  Text(AppStrings.showResult),
-            )
-      ,
-      SizedBox(height: 30,),
+              child: Text(AppStrings.showResult),
+            ),
+            SizedBox(height: 30),
 
             ElevatedButton(
-
               style: ElevatedButton.styleFrom(
-              foregroundColor: colors.primary,
-              backgroundColor: colors.white,
-              side: BorderSide(color: colors.primary),
-                  shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-
-            ),
+                foregroundColor: colors.primary,
+                backgroundColor: colors.white,
+                side: BorderSide(color: colors.primary),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                ),
+              ),
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
                   AppRoutes.examScreen(examId),
                 );
               },
-              child:  Text(AppStrings.startAgain),
-            )
+              child: Text(AppStrings.startAgain),
+            ),
           ],
         ),
       ),

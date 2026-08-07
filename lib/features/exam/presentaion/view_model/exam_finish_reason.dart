@@ -1,4 +1,4 @@
-enum ExamFinishReason{
+enum FinishReason{
 
   user,
   timer,

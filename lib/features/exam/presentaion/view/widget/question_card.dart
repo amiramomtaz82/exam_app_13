@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../domain/entity/question_item.dart';
+import '../../question_item.dart';
 
 import 'review_answer_item.dart';
 
