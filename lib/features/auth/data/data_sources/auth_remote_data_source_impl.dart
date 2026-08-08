@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:exam_app_13/core/base/result.dart';
-import 'package:exam_app_13/features/auth/api/api_Auth.dart';
+
+import 'package:exam_app_13/features/auth/api/api_client/auth_api_client.dart';
 import 'package:exam_app_13/features/auth/data/data_sources/auth_remote_data_source.dart';
 import 'package:exam_app_13/features/auth/data/models/auth_response_dto.dart';
 import 'package:exam_app_13/features/auth/data/models/signin_request_dto.dart';
@@ -10,7 +11,7 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
-  final ApiAuth _apiAuth;
+  final AuthApiClient _apiAuth;
 
   const AuthRemoteDataSourceImpl(this._apiAuth);
 

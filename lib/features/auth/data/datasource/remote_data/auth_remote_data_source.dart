@@ -13,28 +13,9 @@ abstract interface class AuthRemoteDataSource {
 
 
   Future<BaseResponse<ResetPasswordResponse>> restPassword(
-      ResetPasswordRequest request,
-      );
+      ResetPasswordRequest request,);
 
 
-  Future<BaseResponse< ResetCodeResponse>> restCode(
-      ResetCodeRequest request,
-      );
-
-
-abstract class AuthRemoteDataSource {
-
-  Future<BaseResponse<ForgetPasswordResponse>>
-  forgetPassword(ForgetPasswordRequest request);
-
-
-  Future<BaseResponse<ResetPasswordResponse>> restPassword(
-      ResetPasswordRequest request,
-      );
-
-
-  Future<BaseResponse< ResetCodeResponse>> restCode(
-      ResetCodeRequest request,
-      );
+  Future<BaseResponse<ResetCodeResponse>> restCode(ResetCodeRequest request,);
 
 }

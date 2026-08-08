@@ -1,15 +1,13 @@
-import 'package:exam_app_13/features/home/home_screen.dart';
-import 'package:exam_app_13/config/di.dart';
+
 import 'package:exam_app_13/core/app_theme/app_theme.dart';
-import 'package:exam_app_13/features/auth/presentaion/sign_Up_in/view/signin_screen.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:exam_app_13/config/di.dart';
+
 import 'config/di/di.dart';
-import 'core/app_theme/app_theme.dart';
-import 'package:flutter/material.dart';
-import 'config/di/di.dart';
-import 'core/app_theme/app_theme.dart';
+import 'features/auth/presentaion/sign_Up_in/view/signin_screen.dart';
+
+
+
 
 void main() {
 

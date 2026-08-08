@@ -8,6 +8,7 @@ import 'package:retrofit/retrofit.dart';
 
 
 
+import '../../../../core/api/api_constants.dart';
 import '../../data/model/requests/forget_password_request.dart';
 import '../../data/model/requests/login_request.dart';
 
@@ -27,6 +28,9 @@ import '../../data/model/responses/auth_response.dart';
 import '../../data/model/responses/forget_password_response.dart';
 import '../../data/model/responses/reset_code_response.dart';
 import '../../data/model/responses/reset_password_response.dart';
+import '../../data/models/auth_response_dto.dart';
+import '../../data/models/signin_request_dto.dart';
+import '../../data/models/signup_request_dto.dart';
 
 
 
@@ -40,8 +44,8 @@ abstract class AuthApiClient {
   factory AuthApiClient(Dio dio) = _AuthApiClient;
 
 
-  @POST(Endpoints.loginEndPoint)
-  Future<HttpResponse<AuthResponse>> login(@Body() LoginRequest loginRequest);
+
+
 
 
 
@@ -58,4 +62,11 @@ abstract class AuthApiClient {
   @PUT(Endpoints.resetPasswordEndPoint)
   Future<HttpResponse<ResetPasswordResponse>> resetPassword(
       @Body() ResetPasswordRequest restPasswordRequest);
+
+
+  @POST(ApiConstants.signupEndpoint)
+  Future<AuthResponseDto> signup(@Body() SignupRequestDto body);
+
+  @POST(ApiConstants.signinEndpoint)
+  Future<AuthResponseDto> signin(@Body() SigninRequestDto body);
 }
