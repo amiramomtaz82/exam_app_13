@@ -3,7 +3,7 @@ import 'package:exam_app_13/features/result/data/data_source/result_local_data_s
 import 'package:exam_app_13/features/result/domain/dto/result_dto.dart';
 import 'package:injectable/injectable.dart';
 
-@Injectable(as: ResultLocalDataSource)
+@Singleton(as: ResultLocalDataSource)
 class ResultLocalDataSourceImp implements ResultLocalDataSource {
   static const List<ResultDto> _results = [
     ResultDto(

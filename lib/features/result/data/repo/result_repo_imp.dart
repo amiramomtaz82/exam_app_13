@@ -5,7 +5,7 @@ import 'package:exam_app_13/features/result/domain/entity/result_entity.dart';
 import 'package:exam_app_13/features/result/domain/repo/result_repo.dart';
 import 'package:injectable/injectable.dart';
 
-@Injectable(as: ResultRepo)
+@LazySingleton(as: ResultRepo)
 class ResultRepoImp implements ResultRepo {
   final ResultLocalDataSource _resultLocalDataSource;
 
