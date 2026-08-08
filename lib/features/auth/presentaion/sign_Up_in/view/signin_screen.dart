@@ -99,6 +99,7 @@ class _SigninScreenState extends State<SigninScreen> {
                     backgroundColor: Colors.green,
                   ),
                 );
+                Navigator.push(context, AppRoutes.home);
               case ErrorState():
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
