@@ -1,15 +1,14 @@
 import '../../../../../../config/base_state/resource.dart';
 import '../../../../domain/entity/forget_password_entity.dart';
 
-class RestPasswordState {
-
+class ResetPasswordState {
   Resource<ForgetPasswordEntity> resetPasswordResource = Resource.initial();
 
+  ResetPasswordState({required this.resetPasswordResource});
 
-  RestPasswordState({required this.resetPasswordResource});
-
-  RestPasswordState.initial(){
+  ResetPasswordState.initial() {
     resetPasswordResource = Resource.initial();
   }
-
 }
+
+typedef RestPasswordState = ResetPasswordState;

@@ -1,10 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:exam_app/core/api/api_constants.dart';
-import 'package:injectable/injectable.dart';
+import 'package:exam_app_13/core/api/api_constants.dart';
 
-@module
 abstract class RegisterModule {
-  @lazySingleton
   Dio get dio => Dio(
         BaseOptions(
           baseUrl: ApiConstants.baseUrl,
@@ -21,3 +18,4 @@ abstract class RegisterModule {
           ),
         );
 }
+

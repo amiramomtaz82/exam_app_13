@@ -1,4 +1,4 @@
-import 'package:exam_app/feature/auth/login&&regestier/domain/models/auth_result_entity.dart';
+import 'package:exam_app_13/features/auth/domain/models/auth_result_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'auth_response_dto.g.dart';

@@ -1,5 +1,5 @@
-import 'package:exam_app_13/features/auth/presentation/forgetpassword/Reset_password/view_model/reset_password_event.dart';
-import 'package:exam_app_13/features/auth/presentation/forgetpassword/Reset_password/view_model/reset_password_state.dart';
+import 'package:exam_app_13/features/auth/presentaion/forgetpassword/Reset_password/view_model/reset_password_event.dart';
+import 'package:exam_app_13/features/auth/presentaion/forgetpassword/Reset_password/view_model/reset_password_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,42 +8,32 @@ import '../../../../../../config/base_state/resource.dart';
 import '../../../../domain/entity/forget_password_entity.dart';
 import '../../../../domain/usecase/reset_pssword_usecase.dart';
 
-
-
 @injectable
-class ResetPasswordCubit extends Cubit<RestPasswordState>{
+class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   ResetPasswordUsecase _resetPasswordUsecase;
 
-  ResetPasswordCubit(this._resetPasswordUsecase):super(RestPasswordState.initial());
+  ResetPasswordCubit(this._resetPasswordUsecase)
+      : super(ResetPasswordState.initial());
 
-  void doEvent(ResetPasswordEvents event){
-
-
-    switch(event){
-
-      case ResetPasswordEvent(email:String email,newPassword:String newPassword):
+  void doEvent(ResetPasswordEvents event) {
+    switch (event) {
+      case ResetPasswordEvent(email: String email, newPassword: String newPassword):
         _resetPassword(email, newPassword);
-
     }
   }
 
-  void _resetPassword (String email,String newPassword)async{
-
-    emit(RestPasswordState(resetPasswordResource: Resource.loading()));
+  void _resetPassword(String email, String newPassword) async {
+    emit(ResetPasswordState(resetPasswordResource: Resource.loading()));
     await Future.delayed(const Duration(seconds: 2));
-    final result=await _resetPasswordUsecase(email,newPassword);
+    final result = await _resetPasswordUsecase(email, newPassword);
 
-    switch(result){
-
+    switch (result) {
       case SuccessResponse<ForgetPasswordEntity>():
-        emit(RestPasswordState(resetPasswordResource:Resource.success(result.data)));
+        emit(ResetPasswordState(
+            resetPasswordResource: Resource.success(result.data)));
       case ErrorResponse<ForgetPasswordEntity>():
-        emit(RestPasswordState(resetPasswordResource: Resource.error(result.errMessage)));
+        emit(ResetPasswordState(
+            resetPasswordResource: Resource.error(result.errMessage)));
     }
-
-
   }
-
-
-
 }

@@ -1,12 +1,14 @@
-import 'package:exam_app/config/di.dart';
-import 'package:exam_app/core/base/base_state.dart';
-import 'package:exam_app/feature/auth/login&&regestier/presentaion/view/signup_screen.dart';
-import 'package:exam_app/feature/auth/login&&regestier/presentaion/view_model/auth_cubit.dart';
-import 'package:exam_app/feature/auth/login&&regestier/presentaion/view_model/auth_intent.dart';
-import 'package:exam_app/feature/auth/login&&regestier/presentaion/view_model/auth_state.dart';
-import 'package:exam_app/feature/auth/login&&regestier/presentaion/widgets/app_text_form_field.dart';
+import 'package:exam_app_13/config/di.dart';
+import 'package:exam_app_13/core/app_routes/app_routes.dart';
+import 'package:exam_app_13/core/base/base_state.dart';
+import 'package:exam_app_13/features/auth/presentaion/sign_Up_in/view/signup_screen.dart';
+import 'package:exam_app_13/features/auth/presentaion/sign_Up_in/view_model/auth_cubit.dart';
+import 'package:exam_app_13/features/auth/presentaion/sign_Up_in/view_model/auth_intent.dart';
+import 'package:exam_app_13/features/auth/presentaion/sign_Up_in/view_model/auth_state.dart';
+import 'package:exam_app_13/features/auth/presentaion/sign_Up_in/widgets/app_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
@@ -162,7 +164,11 @@ class _SigninScreenState extends State<SigninScreen> {
                         ],
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).push(
+                            AppRoutes.forgetPassword,
+                          );
+                        },
                         child: const Text(
                           'Forgot password?',
                           style: TextStyle(
