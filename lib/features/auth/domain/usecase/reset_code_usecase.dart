@@ -5,7 +5,7 @@ import '../../../../config/base_response/base_response.dart';
 import '../entity/forget_password_entity.dart';
 import '../repo/auth_repo.dart';
 
-@lazySingleton
+@injectable
 class ResetCodeUsecase {
 
   AuthRepo authRepo;

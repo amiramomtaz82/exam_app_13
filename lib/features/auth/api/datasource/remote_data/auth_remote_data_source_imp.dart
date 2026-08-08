@@ -10,7 +10,7 @@ import '../../../data/model/responses/reset_code_response.dart';
 import '../../../data/model/responses/reset_password_response.dart';
 import '../../api_client/auth_api_client.dart';
 
-@LazySingleton(as: AuthRemoteDataSource)
+@Injectable(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
 
