@@ -119,11 +119,6 @@ late int seconds;
         }
       },
       builder: (context, state) {
-        final ExamCubit cubit = context.read<ExamCubit>();
-        final questionItem = cubit.currentQuestion;
-        if (questionItem == null) {
-          return const Center(child: CircularProgressIndicator());
-        }
         if (state.questionsResource.isError) {
           return Center(
             child: Text(
@@ -132,6 +127,18 @@ late int seconds;
             ),
           );
         }
+
+        if (state.questions.isEmpty) {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+        final ExamCubit cubit = context.read<ExamCubit>();
+        final questionItem =state.questions[state.currentQuestionIndex];
+
+
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(

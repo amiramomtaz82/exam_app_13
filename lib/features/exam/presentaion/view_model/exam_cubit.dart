@@ -162,11 +162,7 @@ class ExamCubit extends Cubit<ExamState> {
     }
   }
 //------------------------------------------------
-  QuestionItem? get currentQuestion {
-    if (state.questions.isEmpty) return null;
 
-    return state.questions[state.currentQuestionIndex];
-  }
 
 
 
