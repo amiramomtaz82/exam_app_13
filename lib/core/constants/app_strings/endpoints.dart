@@ -9,4 +9,7 @@ class Endpoints {
 
       static const String resetCodeEndPoint ="api/v1/auth/verifyResetCode";
       static const String resetPasswordEndPoint ="api/v1/auth/resetPassword";
+
+  static const String getAllSubjectEndPoint="api/v1/subjects";
+
 }

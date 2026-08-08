@@ -1,7 +1,5 @@
 
-
-
-
+import 'package:exam_app_13/features/subject/presentation/view_model/subject_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,10 +18,12 @@ import '../../features/auth/presentation/forgetpassword/verify_code/view_model/r
 import '../../features/home/home_screen.dart';
 
 
+import '../../features/subject/presentation/view/subject_screen.dart';
+import '../../features/subject/presentation/view_model/subject_cubit.dart';
+
 
 
 abstract final class AppRoutes {
-
   static MaterialPageRoute get login =>
       MaterialPageRoute(builder: (_) => SigninScreen());
 
