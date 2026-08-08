@@ -1,5 +1,9 @@
 import 'package:exam_app_13/features/home/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'config/di/di.dart';
+import 'core/app_theme/app_theme.dart';
 
 import 'config/di/di.dart';
 import 'core/app_theme/app_theme.dart';
@@ -18,6 +22,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
+        theme: AppTheme.lightTheme,
+         home: Scaffold()
+      // BlocProvider(
+      //     create: (_) => getIt<ForgetPasswordCubit>(),
+      //     child: const ForgetPasswordScreen(),
+
+      //   )
+       );
       theme: AppTheme.lightTheme,
       home: HomeScreen(),
       );

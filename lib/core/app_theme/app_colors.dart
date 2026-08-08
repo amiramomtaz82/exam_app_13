@@ -38,9 +38,9 @@ abstract class AppColors {
 }
 
 
-class LightColors implements AppColors {
+ class LightColors implements AppColors {
   @override
-  Color get primary => const Color(0xff02369C);
+ Color get primary => const Color(0xff02369C);
 
   @override
   Color get secondary => const Color(0xffA6A6A6);
