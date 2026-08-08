@@ -9,6 +9,8 @@ abstract class AppColors {
   Color get error;
 
   Color get success;
+  Color get lightGreen;
+  Color get lightRed;
 
   Color get black;
 
@@ -90,5 +92,13 @@ class LightColors implements AppColors {
   @override
   // TODO: implement lightBlue
   Color get lightBlue => const Color(0xffEDEFF3);
+
+  @override
+  // TODO: implement lightGreen
+  Color get lightGreen => const Color(0xffCAF9CC);
+
+  @override
+  // TODO: implement lightRed
+  Color get lightRed => const Color(0xffF8D2D2);
 
 }
