@@ -54,4 +54,7 @@ static const String survey="Survey";
   static const String incorrect  ="incorrect";
 
   static const String examFinished  ="Exam Finished !!";
+
+  static const String results = "Results";
+  static const String noResultsFound = "No results found.";
 }

@@ -1,3 +1,6 @@
+import 'package:exam_app_13/features/result/presentation/view/result_screen.dart';
+import 'package:exam_app_13/features/result/presentation/view_model/result_cubit.dart';
+import 'package:exam_app_13/features/result/presentation/view_model/result_event.dart';
 import 'package:exam_app_13/features/subject/presentation/view/subject_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,8 +26,11 @@ class _HomeScreenState extends State<HomeScreen> {
       child: const SubjectScreen(),
     ),
 
-  Text("result"),
-  Text("profile"),
+    BlocProvider(
+      create: (_) => getIt<ResultCubit>()..doEvents(const GetAllResultsEvent()),
+      child: const ResultScreen(),
+    ),
+    const Text("profile"),
   ];
   @override
   Widget build(BuildContext context) {
