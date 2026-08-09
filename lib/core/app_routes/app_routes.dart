@@ -18,15 +18,12 @@ import '../../features/auth/presentation/forgetpassword/verify_code/view_model/r
 import '../../features/home/home_screen.dart';
 
 
-import '../../features/auth/presentation/login/view/login_screen.dart';
-import '../../features/auth/presentation/register/view/register_screen.dart';
 import '../../features/exam/presentaion/view/review_answer_screen.dart';
 import '../../features/exam/presentaion/view/exam_score_screen.dart';
 import '../../features/exam/presentaion/view/exam_screen.dart';
 import '../../features/exam/presentaion/view_model/exam_cubit.dart';
 import '../../features/exam/presentaion/view_model/exam_event.dart';
-import '../../features/subject/presentation/view/subject_screen.dart';
-import '../../features/subject/presentation/view_model/subject_cubit.dart';
+
 
 
 
