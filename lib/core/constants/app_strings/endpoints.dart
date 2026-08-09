@@ -12,4 +12,6 @@ class Endpoints {
 
   static const String getAllSubjectEndPoint="api/v1/subjects";
 
+  static const String getAllQuestionByExam="api/v1/questions";
+
 }
